@@ -4,7 +4,7 @@ from models.customer import Customer
 class Package:
     next_id = 1
 
-    def __init__(self, start_location, end_location, weight, contact_info: Customer):
+    def __init__(self, start_location, end_location, weight: float, contact_info: Customer):
         self.id = Package.next_id
         self.start_location = start_location
         self.end_location = end_location
@@ -13,13 +13,11 @@ class Package:
         Package.next_id += 1
 
     def __str__(self):
-        return f'{self.start_location} - {self.end_location} - {self.weight} - {self.contact_info}'
-
-
-params = input().split()
-package_start_location = params[0]
-package_end_location = params[1]
-package_weight = float(params[2])
-package_contact_info = Customer(params[3], params[4], params[5])
-package = Package(package_start_location, package_end_location, package_weight, package_contact_info)
-print(package)
+        contact_info_str = str(self.contact_info).replace('\n', '\n    ')
+        return f'---Package info: ---\n' \
+               f'   #Package ID: {self.id}\n' \
+               f'   #Package start location: {self.start_location}\n' \
+               f'   #Package end location: {self.end_location}\n' \
+               f'   #Package weight: {self.weight}\n' \
+               f'    ---Contact info: ---\n' \
+               f'{contact_info_str}'
