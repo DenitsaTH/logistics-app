@@ -1,6 +1,8 @@
 from models.customer import Customer
 
 
+# !!!TODO ENCAPSULATE THE CODE!!!
+
 class Package:
     next_id = 1
 
