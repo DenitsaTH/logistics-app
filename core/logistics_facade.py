@@ -1,30 +1,36 @@
 from core.app_data import AppData
-from model_services.package_service import PackageService
-from model_services.route_manager import RouteManager
+from model_managers.package_manager import PackageManager
+from model_managers.route_manager import RouteManager
 
 
 class LogisticsFacade:
     def __init__(self):
-        app_data = AppData()
-        package_service = PackageService(app_data) # manages Packages
-        route_service = RouteManager(app_data) # manages Routes
+        self.app_data = AppData()
+        self.package_service = PackageManager(self.app_data) # manages Packages
+        self.route_manager = RouteManager(self.app_data) # manages Routes
+
 
     # Example commands:
-        
-    def add_package(self):
-        pass
-
-    def update_package(self):
+    def create_package(self):
         pass
 
     def create_route(self, *stops):
         self.route_manager.generate_route(*stops)
 
-    def update_route(self):
+    def find_route(self):
+        pass
+
+    def assign_truck_to_route(self):
+        pass
+
+    def assign_package_to_route(self):
+        pass
+
+    def view_package_information(self):
         pass
 
     def view_route_information(self):
         pass
 
-    def view_package_information(self):
+    def view_trucks_information(self):
         pass
