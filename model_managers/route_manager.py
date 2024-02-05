@@ -60,11 +60,14 @@ class RouteManager:
     def __init__(self, app_data: AppData) -> None:
         self.app_data = app_data
 
-
+    # stop = [SYD, MEL, BRI] 
+    # distances =  [877, 1765]
     def generate_route(self, *stops): 
         distances = []
 
-        for i in range(1, len(stops) + 1):
+        for i in range(1, len(stops)):
+            if i == len(stops) - 1:
+                break
             distances.append(RouteManager.DISTANCES[stops[i]][stops[i + 1]])
         
         self.app_data.add_route(Route(RouteManager.id, distances, stops))
@@ -72,7 +75,11 @@ class RouteManager:
 
 
     def assign_truck(self, route: Route, truck: Truck):
+        # check if truck's km range is >= route's total km
+
         if route.truck is not None:
             raise ValueError("This route already has an assigned truck!")
+    
+
         
         route.truck = truck

@@ -18,7 +18,7 @@ class Route:
         Sydney (Oct 12th 06:00h) → Melbourne (Oct 12th 20:00h) → Adelaide (Oct 13th 15:00h) 
         """
 
-        result = [(f'{x} ({self.custom_strftime('%b {S} %H:%Mh', y)})') for x, y in zip(self.distances, self.find_next_stop_arrival_time())]
+        result = [(f'{x} ({self.custom_strftime('%b {S} %H:%Mh', y)})') for x, y in zip(self.stops, self.find_next_stop_arrival_time())]
         return result
     
 
