@@ -1,5 +1,4 @@
 class Customer:
-    next_id = 1
 
     def __init__(self, first_name: str, last_name: str, email: str):
         if (len(first_name) < 2 or len(first_name) > 15) or not first_name.isalpha():
@@ -14,16 +13,9 @@ class Customer:
             raise ValueError(f'!!! ERROR EMAIL ADDRESS: "{email}"!!!\n'
                              f'   -Email address has to be between 5-30 symbols and it has to contain " @ . " symbols!')
 
-        self._id = Customer.next_id
         self._first_name = first_name
         self._last_name = last_name
         self._email = email
-
-        Customer.next_id += 1
-
-    @property
-    def id(self):
-        return self._id
 
     @property
     def first_name(self):
@@ -38,8 +30,7 @@ class Customer:
         return self._email
 
     def __str__(self):
-        string = "       " + f'#ID: {self.id}\n' \
-                 f'   #First Name: {self.first_name}\n' \
+        string = f'   #First Name: {self.first_name}\n' \
                  f'   #Last Name: {self.last_name}\n' \
                  f'   #Email: {self.email}'
         return string
