@@ -20,8 +20,8 @@ class LogisticsFacade:
     def find_route(self):
         pass
 
-    def assign_truck_to_route(self):
-        pass
+    def assign_truck_to_route(self, route, truck):
+        self.route_manager.assign_truck(route, truck)
 
     def assign_package_to_route(self):
         pass

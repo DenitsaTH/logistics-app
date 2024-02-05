@@ -69,3 +69,10 @@ class RouteManager:
         
         self.app_data.add_route(Route(RouteManager.id, distances, stops))
         RouteManager.increment_id
+
+
+    def assign_truck(self, route: Route, truck: Truck):
+        if route.truck is not None:
+            raise ValueError("This route already has an assigned truck!")
+        
+        route.truck = truck
