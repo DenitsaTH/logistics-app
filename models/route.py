@@ -12,6 +12,11 @@ class Route:
         self.truck = None
 
 
+    @property
+    def total_distance(self):
+        return sum(self.distances)
+
+
     def __str__(self) -> str:
         """
         Brisbane (Oct 10th 06:00h) → Sydney (Oct 10th 20:00h) → Melbourne (Oct 11th 18:00h)

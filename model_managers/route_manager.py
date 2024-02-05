@@ -74,12 +74,17 @@ class RouteManager:
         RouteManager.increment_id
 
 
-    def assign_truck(self, route: Route, truck: Truck):
+    def get_route_by_id(self, route_id):
+        return self.app_data.get_route(route_id)
+
+
+    def assign_truck(self, truck: Truck, route=get_route_by_id(route_id)):
         # check if truck's km range is >= route's total km
 
         if route.truck is not None:
             raise ValueError("This route already has an assigned truck!")
-    
-
+        
+        if route.total_distance > truck.max_range:
+            raise ValueError("This route's total distance exceeds the max range of this truck")
         
         route.truck = truck

@@ -22,4 +22,10 @@ class AppData:
     def view_route_information(self):
         # [r.info() for r in self.routes]
         pass
+
+
+    def get_route(self, route_id):
+        for route in self.routes:
+            if route.id == route_id:
+                return route
     
