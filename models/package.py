@@ -21,5 +21,5 @@ class Package:
                f'   #Package start location: {self.start_location}\n' \
                f'   #Package end location: {self.end_location}\n' \
                f'   #Package weight: {self.weight}\n' \
-               f'    ---Contact info: ---\n' \
-               f'{contact_info_str}'
+               f'   ---Contact info: ---\n' \
+               f'      {contact_info_str}'
