@@ -30,7 +30,7 @@ class LogisticsFacade:
         pass
 
     def view_route_information(self):
-        pass
+        """Each route's stops, delivery weight and expected current stop"""
 
     def view_trucks_information(self):
         pass

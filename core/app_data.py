@@ -14,7 +14,12 @@ class AppData:
     def add_route(self, route: Route):
         self.routes.append(route)
 
+    
+    def find_suitable_route(self):
+        pass
+
 
     def view_route_information(self):
         # [r.info() for r in self.routes]
         pass
+    
