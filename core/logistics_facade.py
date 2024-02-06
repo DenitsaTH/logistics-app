@@ -10,10 +10,8 @@ class LogisticsFacade:
         self.route_manager = RouteManager(self.app_data) # manages Routes
 
 
-    # Example commands:
     def create_package(self, start_point, end_point, weight, *customer_info):
-        self.package_manager.log_package(start_point, end_point, weight, *customer_info)
-        return f"Package successfully logged!"
+        return self.package_manager.log_package(start_point, end_point, weight, *customer_info)
         
     
     def create_route(self, *stops):
