@@ -1,1 +1,2 @@
 logistics_facade.create_package('SYD', 'MEL', 20, 'Petar', 'Petrov', 'pesho@gmail.com')
+exit

@@ -1,18 +1,23 @@
+import io
 from core.logistics_facade import LogisticsFacade
-
 
 file_path = 'client_code.txt'
 logistics_facade = LogisticsFacade()
 
 with open(file_path, 'r') as file:
-    line = file.readline()
+    line = file.readline().strip()
     output = []
 
-    while line: 
+    while line != 'exit':
+
         try:
-            output.append(exec(line))
+            output_buffer = io.StringIO()
+            exec(f"output_buffer.write({line})", {"logistics_facade": logistics_facade}, {"output_buffer": output_buffer})
+            output.append(output_buffer.getvalue())
+            
         except Exception as err:
             output.append(str(err))
+        
+        line = file.readline().strip() 
 
-
-    print('\n'.join(output))
+print('\n'.join(output))
