@@ -1,4 +1,5 @@
 from models.route import Route
+from models.package import Package
 
 
 class AppData:
@@ -8,8 +9,7 @@ class AppData:
 
 
     def add_package(self, package: Package):
-        # self.pending_packages.append(package)
-        raise NotImplementedError
+        self.pending_packages.append(package)
 
 
     def add_route(self, route: Route):

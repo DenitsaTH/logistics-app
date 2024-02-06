@@ -78,30 +78,30 @@ class RouteManager:
         return self.app_data.get_route(route_id)
 
 
-    def assign_truck(self, route=get_route_by_id(route_id)):
-        # check if truck's km range is >= route's total km
+    # def assign_truck(self, route=get_route_by_id()):
+    #     # check if truck's km range is >= route's total km
 
-        if route.truck is not None:
-            raise ValueError("This route already has an assigned truck!")
+    #     if route.truck is not None:
+    #         raise ValueError("This route already has an assigned truck!")
         
-        if route.total_distance > 8000:
-            # instantiate Scania truck
-            raise NotImplementedError
-        elif 8000 <= route.total_distance <= 10000:
-            # instantiate Man truck
-            raise NotImplementedError
-        elif 10000 <= route.total_distance <= 13000:
-            # instantiate Actros truck
-            raise NotImplementedError
-        else:
-            raise ValueError("No truck with such km range!")
+    #     if route.total_distance > 8000:
+    #         # instantiate Scania truck
+    #         raise NotImplementedError
+    #     elif 8000 <= route.total_distance <= 10000:
+    #         # instantiate Man truck
+    #         raise NotImplementedError
+    #     elif 10000 <= route.total_distance <= 13000:
+    #         # instantiate Actros truck
+    #         raise NotImplementedError
+    #     else:
+    #         raise ValueError("No truck with such km range!")
         
-        route.truck = truck
+    #     route.truck = truck
 
 
-    def assign_package_to_route(self, package: Package):
-        start_point = package.start_point
-        end_point = package.end_point
-        weight = package.weight
+    # def assign_package_to_route(self, package: Package):
+    #     start_point = package.start_point
+    #     end_point = package.end_point
+    #     weight = package.weight
 
-        self.app_data.find_suitable_route(start_point, end_point, weight)
+    #     self.app_data.find_suitable_route(start_point, end_point, weight)

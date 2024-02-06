@@ -4,15 +4,17 @@ from models.customer import Customer
 # !!!TODO ENCAPSULATE THE CODE!!!
 
 class Package:
-    next_id = 1
+    # next_id = 1
 
-    def __init__(self, start_location, end_location, weight: float, contact_info: Customer):
-        self.id = Package.next_id
+    def __init__(self, id, start_location, end_location, weight: float, contact_info: Customer):
+        # self.id = Package.next_id
+        self.id = id
         self.start_location = start_location
         self.end_location = end_location
         self.weight = weight
         self.contact_info = contact_info
-        Package.next_id += 1
+        # Package.next_id += 1
+
 
     def __str__(self):
         contact_info_str = str(self.contact_info).replace('\n', '\n    ')

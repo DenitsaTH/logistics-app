@@ -6,16 +6,15 @@ from model_managers.route_manager import RouteManager
 class LogisticsFacade:
     def __init__(self):
         self.app_data = AppData()
-        self.package_service = PackageManager(self.app_data) # manages Packages
+        self.package_manager = PackageManager(self.app_data) # manages Packages
         self.route_manager = RouteManager(self.app_data) # manages Routes
 
 
     # Example commands:
-    def create_package(self):
-        # self.package_manager.create_package(start_point, end_point, weight, *customer_info)
-        raise NotImplementedError
-
-
+    def create_package(self, start_point, end_point, weight, *customer_info):
+        return self.package_manager.log_package(start_point, end_point, weight, *customer_info)
+        
+    
     def create_route(self, *stops):
         self.route_manager.generate_route(*stops)
 
