@@ -5,7 +5,6 @@ from models.truck import Truck
 
 class RouteManager:
     id = 1
-    
 
     DISTANCES = {
         'SYD': {'MEL': 877,
@@ -52,37 +51,33 @@ class RouteManager:
                 'DAR': 4025}
     }
 
-
     @classmethod
     def increment_id(cls):
         cls.id += 1
-
 
     def __init__(self, app_data: AppData) -> None:
         self.app_data = app_data
 
     # stop = [SYD, MEL, BRI, ASP, ADL] MEL - BRI stop[1:]
     # distances =  [877, 1765]
-    def generate_route(self, *stops): 
+    def generate_route(self, *stops):
         distances = []
 
         for i in range(len(stops) - 1):
             distances.append(RouteManager.DISTANCES[stops[i]][stops[i + 1]])
-        
-        self.app_data.add_route(Route(RouteManager.id, distances, stops))
-        RouteManager.increment_id
 
+        self.app_data.add_route(Route(RouteManager.id, distances, *stops))
+        RouteManager.increment_id
 
     def get_route_by_id(self, route_id):
         return self.app_data.get_route(route_id)
-
 
     def assign_truck(self, id):
         route = self.get_route_by_id(id)
 
         if route.truck is not None:
             raise ValueError('This route already has an assigned truck!')
-        
+
         if route.total_distance <= 8000:
             truck = Truck('Scania')
         elif 8000 < route.total_distance <= 10000:
@@ -91,10 +86,9 @@ class RouteManager:
             truck = Truck('Actros')
         else:
             raise ValueError('No truck with such km range!')
-        
+
         route.truck = truck
         return f'Truck assigned to route:\n{truck}'
-
 
     # def assign_package_to_route(self, package: Package):
     #     start_point = package.start_point
