@@ -24,7 +24,7 @@ class Route:
         """
 
         result = [(f'{x} ({self.custom_strftime('%b {S} %H:%Mh', y)})') for x, y in zip(self.stops, self.find_next_stop_arrival_time())]
-        return result
+        return ''.join(result)
     
 
     def find_next_stop_arrival_time(self):

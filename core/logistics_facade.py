@@ -16,19 +16,19 @@ class LogisticsFacade:
     
     def create_route(self, *stops):
         self.route_manager.generate_route(*stops)
+        return "Route successfully added!"
 
 
-    def assign_truck_to_route(self, route_id, truck_id):
-        self.route_manager.assign_truck(route, truck)
+    def assign_truck_to_route(self, route_id: int):
+        return self.route_manager.assign_truck(route_id)
 
 
     def assign_package_to_route(self):
-        # self.route_manager.assign_package(Package)
-        raise NotImplementedError
+        pass
 
 
     def view_package_information(self):
-        raise NotImplementedError
+        return self.app_data.view_package_information()
 
 
     def view_route_information(self):

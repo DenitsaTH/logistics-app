@@ -1,5 +1,6 @@
 from models.route import Route
 from core.app_data import AppData
+from models.truck import Truck
 
 
 class RouteManager:
@@ -60,14 +61,12 @@ class RouteManager:
     def __init__(self, app_data: AppData) -> None:
         self.app_data = app_data
 
-    # stop = [SYD, MEL, BRI] 
+    # stop = [SYD, MEL, BRI, ASP, ADL] MEL - BRI stop[1:]
     # distances =  [877, 1765]
     def generate_route(self, *stops): 
         distances = []
 
-        for i in range(1, len(stops)):
-            if i == len(stops) - 1:
-                break
+        for i in range(len(stops) - 1):
             distances.append(RouteManager.DISTANCES[stops[i]][stops[i + 1]])
         
         self.app_data.add_route(Route(RouteManager.id, distances, stops))
@@ -78,25 +77,23 @@ class RouteManager:
         return self.app_data.get_route(route_id)
 
 
-    # def assign_truck(self, route=get_route_by_id()):
-    #     # check if truck's km range is >= route's total km
+    def assign_truck(self, id):
+        route = self.get_route_by_id(id)
 
-    #     if route.truck is not None:
-    #         raise ValueError("This route already has an assigned truck!")
+        if route.truck is not None:
+            raise ValueError('This route already has an assigned truck!')
         
-    #     if route.total_distance > 8000:
-    #         # instantiate Scania truck
-    #         raise NotImplementedError
-    #     elif 8000 <= route.total_distance <= 10000:
-    #         # instantiate Man truck
-    #         raise NotImplementedError
-    #     elif 10000 <= route.total_distance <= 13000:
-    #         # instantiate Actros truck
-    #         raise NotImplementedError
-    #     else:
-    #         raise ValueError("No truck with such km range!")
+        if route.total_distance <= 8000:
+            truck = Truck('Scania')
+        elif 8000 < route.total_distance <= 10000:
+            truck = Truck('Man')
+        elif 10000 < route.total_distance <= 13000:
+            truck = Truck('Actros')
+        else:
+            raise ValueError('No truck with such km range!')
         
-    #     route.truck = truck
+        route.truck = truck
+        return f'Truck assigned to route:\n{truck}'
 
 
     # def assign_package_to_route(self, package: Package):

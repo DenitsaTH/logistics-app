@@ -1,2 +1,4 @@
 logistics_facade.create_package('SYD', 'MEL', 20, 'Petar', 'Petrov', 'pesho@gmail.com')
+logistics_facade.create_route('SYD', 'MEL')
+logistics_facade.assign_truck_to_route(1)
 exit

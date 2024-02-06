@@ -14,17 +14,16 @@ class Truck:
         self.brand = brand
         self.packages: list[Package] = []
 
-        if self.trucks[brand]['number_of_vehicles'] > 0 and self.trucks[brand]['capacity'] > 0:
+        if self.trucks[brand]['number_of_vehicles'] > 0:
 
-            self.truck_id = int(self.trucks[brand]['next_id'])
-            self.capacity = float(self.trucks[brand]['capacity'])
-            self.max_range = float(self.trucks[brand]['max_range'])
-            self.number_of_vehicles = int(self.trucks[brand]['number_of_vehicles'])
+            self.truck_id = int(Truck.trucks[brand]['next_id'])
+            self.capacity = float(Truck.trucks[brand]['capacity'])
+            self.max_range = float(Truck.trucks[brand]['max_range'])
 
-            self.trucks[brand]['next_id'] += 1
-            self.trucks[brand]['number_of_vehicles'] -= 1
+            Truck.trucks[brand]['next_id'] += 1
+            Truck.trucks[brand]['number_of_vehicles'] -= 1
 
-            if self.truck_id > self.trucks[brand]['end_id']:
+            if self.truck_id > Truck.trucks[brand]['end_id']:
                 raise ValueError(f'All IDs for truck brand "{brand}" have been allocated!')
         else:
             raise ValueError(f'No more trucks available for brand "{brand}".')
@@ -68,8 +67,8 @@ class Truck:
         return f'Truck with:\n' \
                f'ID: {self.truck_id}\n' \
                f'Brand: {self.brand}\n' \
-               f'Capacity: {self.capacity}\n' \
-               f'Max range: {self.max_range}'
+               f'Capacity: {self.capacity}kg\n' \
+               f'Max range: {self.max_range}km'
 
 # try:
 #     contact = Customer('Pesho', 'Petrov', 'pesho@mail.bg')

@@ -8,6 +8,7 @@ with open(file_path, 'r') as file:
     line = file.readline().strip()
     output = []
 
+
     while line != 'exit':
 
         try:
