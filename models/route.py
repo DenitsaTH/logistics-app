@@ -23,7 +23,8 @@ class Route:
 
         result = [f'{x} ({self.custom_strftime("%b {S} %H:%Mh", y)})' for x, y in
                   zip(self.stops, self.find_next_stop_arrival_time())]
-        return ''.join(result)
+        return '\n'.join(result)
+
 
     def find_next_stop_arrival_time(self):
         arrival_times = [self.departure_date_time]

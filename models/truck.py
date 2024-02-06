@@ -1,6 +1,5 @@
 # TODO ENCAPSULATE
 from models.package import Package
-from models.customer import Customer
 
 
 class Truck:
@@ -10,14 +9,15 @@ class Truck:
         'Actros': {'next_id': 1026, 'end_id': 1040, 'capacity': 26000, 'max_range': 13000, 'number_of_vehicles': 15}
     }
 
-    def __init__(self, brand: str):
+    def __init__(self, brand: str, stops_count: int):
         self.brand = brand
         self.packages: list[Package] = []
 
         if self.trucks[brand]['number_of_vehicles'] > 0:
 
             self.truck_id = int(Truck.trucks[brand]['next_id'])
-            self.capacity = float(Truck.trucks[brand]['capacity'])
+            self.capacity = [float(Truck.trucks[brand]['capacity'])] * stops_count # [42000, 42000, 42000]
+            # self.capacity = float(Truck.trucks[brand]['capacity']) 
             self.max_range = float(Truck.trucks[brand]['max_range'])
 
             Truck.trucks[brand]['next_id'] += 1
@@ -69,33 +69,3 @@ class Truck:
                f'Brand: {self.brand}\n' \
                f'Capacity: {self.capacity}kg\n' \
                f'Max range: {self.max_range}km'
-
-# try:
-#     contact = Customer('Pesho', 'Petrov', 'pesho@mail.bg')
-#     pckg1 = Package('Varna', 'Sofia', 41000, contact)
-#     pckg2 = Package('Sofia', 'Varna', 500, contact)
-#     truck1 = Truck('Scania')
-#     truck2 = Truck('Scania')
-#
-#     print(f'{truck1}\n\n{truck2}')
-#     print()
-#     print('----add package----')
-#     print(truck1.add_package(pckg1))
-#     print()
-#     print('----add package-----')
-#     print(truck1.add_package(pckg2))
-#     print()
-#     print(truck1)
-#     print()
-#     print('----find package by id----')
-#     print(truck1.find_package_by_id(1))
-#     print()
-#     print('----remove package by id----')
-#     print(truck1.remove_package_by_id(1))
-#     print()
-#     print(truck1)
-#
-#     truck1.add_package(pckg2)
-# except Exception as err:
-#     print('ERROR:')
-#     print(err)

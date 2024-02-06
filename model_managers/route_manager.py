@@ -69,8 +69,10 @@ class RouteManager:
         self.app_data.add_route(Route(RouteManager.id, distances, *stops))
         RouteManager.increment_id
 
+
     def get_route_by_id(self, route_id):
         return self.app_data.get_route(route_id)
+
 
     def assign_truck(self, id):
         route = self.get_route_by_id(id)
@@ -79,7 +81,7 @@ class RouteManager:
             raise ValueError('This route already has an assigned truck!')
 
         if route.total_distance <= 8000:
-            truck = Truck('Scania')
+            truck = Truck('Scania', len(route.stops))
         elif 8000 < route.total_distance <= 10000:
             truck = Truck('Man')
         elif 10000 < route.total_distance <= 13000:
@@ -89,10 +91,3 @@ class RouteManager:
 
         route.truck = truck
         return f'Truck assigned to route:\n{truck}'
-
-    # def assign_package_to_route(self, package: Package):
-    #     start_point = package.start_point
-    #     end_point = package.end_point
-    #     weight = package.weight
-
-    #     self.app_data.find_suitable_route(start_point, end_point, weight)

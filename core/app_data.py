@@ -1,5 +1,6 @@
 from models.route import Route
 from models.package import Package
+from models.truck import Truck
 
 
 class AppData:
@@ -20,6 +21,7 @@ class AppData:
         package_start_location = package.start_location
         package_end_location = package.end_location
         package_kg = package.weight
+
         route = self.find_suitable_route(package_start_location, package_end_location, package_kg)
         # checks it truck exists; checks truck capacity [42, 42, 42, 0]
         if route:
@@ -37,6 +39,7 @@ class AppData:
 
     def view_package_information(self):
         # new_line = '\n'
+        # datetime.now() 
         return '\n'.join([str(p) for p in self.pending_packages])
 
     def view_truck_information(self):
@@ -59,6 +62,7 @@ class AppData:
         for route in self.routes:
             for i in range(len(route.stops)):
                 if start_location == route.stops[i] and end_location in route.stops[i + 1:]:
+                    # index = route.stops.index(start_location)
                     if route.truck and route.truck.capacity >= package_kg:
                         return route
         return
