@@ -58,10 +58,9 @@ class RouteManager:
     def __init__(self, app_data: AppData) -> None:
         self.app_data = app_data
 
-    # stop = [SYD, MEL, BRI, ASP, ADL] MEL - BRI stop[1:]
-    # distances =  [877, 1765]
+    
     def generate_route(self, *stops):
-        distances = []
+        distances = []  # distances =  [877, 1765]
 
         for i in range(len(stops) - 1):
             distances.append(RouteManager.DISTANCES[stops[i]][stops[i + 1]])

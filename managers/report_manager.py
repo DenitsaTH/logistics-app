@@ -1,0 +1,2 @@
+class ReportManager:
+    pass
