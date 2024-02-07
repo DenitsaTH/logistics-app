@@ -16,7 +16,7 @@ class Package:
     def __str__(self):
         contact_info_str = str(self.contact_info).replace('\n', '\n    ')
         return f'---Package info: ---\n' \
-               f'   #Package ID: {self.id}\n' \
+               f'   #Package ID: [{self.id}]\n' \
                f'   #Package start location: {self.start_location}\n' \
                f'   #Package end location: {self.end_location}\n' \
                f'   #Package weight: {self.weight}kg\n' \

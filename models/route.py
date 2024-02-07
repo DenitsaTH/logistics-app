@@ -3,43 +3,45 @@ from datetime import datetime, timedelta, time
 
 class Route:
     DEFAULT_DEPARTURE_DATETIME = datetime.combine(datetime.today() + timedelta(1), time(hour=6))
+    DEFAULT_SPEED = 87
 
     def __init__(self, id: int, distances: list, departure_time=None, *stops) -> None:
+        
+        self.id = id
+        self.distances = distances
 
         if departure_time is None:
             self.departure_time = Route.DEFAULT_DEPARTURE_DATETIME
         else:
             self.departure_time = departure_time
-            
-        self.id = id
-        self.distances = distances
+        
         self.stops = stops
         self.truck = None
+
 
     @property
     def total_distance(self):
         return sum(self.distances)
+    
 
-    def __str__(self) -> str:
-        """
-        Brisbane (Oct 10th 06:00h) → Sydney (Oct 10th 20:00h) → Melbourne (Oct 11th 18:00h)
-        Sydney (Oct 12th 06:00h) → Melbourne (Oct 12th 20:00h) → Adelaide (Oct 13th 15:00h) 
-        """
-
-        result = [f'{x} ({self.custom_strftime("%b {S} %H:%Mh", y)})' for x, y in
-                  zip(self.stops, self.find_next_stop_arrival_time())]
-        return '\n'.join(result)
-
+    @property
+    def arrival_time(self):
+        time_to_travel_in_mins = int((self.total_distance / Route.DEFAULT_SPEED) * 60)
+        return self.departure_time + timedelta(minutes=time_to_travel_in_mins)
+    
 
     def find_next_stop_arrival_time(self):
-        arrival_times = [self.departure_date_time]
+        time_slots = [self.departure_time]
+        current_slot = self.departure_time
 
         for d in self.distances:
-            total_time_per_distance = d / 87  # self.truck.DEFAULT_SPEED
-            arrival_time = self.DEFAULT_DEPARTURE_DATETIME + timedelta(total_time_per_distance)
-            arrival_times.append(arrival_time)
+            total_time_per_distance_in_mins = int((d / Route.DEFAULT_SPEED) * 60)
+            arrival_time = current_slot + timedelta(minutes=total_time_per_distance_in_mins)
+            time_slots.append(arrival_time)
+            current_slot = arrival_time
 
-        return arrival_times
+        return time_slots
+
 
     def custom_strftime(self, format_string, t):
         def suffix(d):
@@ -49,4 +51,8 @@ class Route:
                 return {1: 'st', 2: 'nd', 3: 'rd'}.get(d % 10, 'th')
 
         return t.strftime(format_string).replace('{S}', str(t.day) + suffix(t.day))
+    
 
+    def __str__(self) -> str:
+        result = [f'{x} ({self.custom_strftime("%b {S} %H:%Mh", y)})' for x, y in zip(self.stops, self.find_next_stop_arrival_time())]
+        return ' → '.join(result)

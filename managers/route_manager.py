@@ -65,8 +65,10 @@ class RouteManager:
         for i in range(len(stops) - 1):
             distances.append(RouteManager.DISTANCES[stops[i]][stops[i + 1]])
 
-        self.app_data.add_route(Route(RouteManager.id, distances, *stops))
+        route = Route(RouteManager.id, distances, None, *stops)
+        self.app_data.add_route(route)
         RouteManager.increment_id
+        return f'Below route successfully added:\n{str(route)}'
 
 
     def get_route_by_id(self, route_id):
@@ -78,15 +80,12 @@ class RouteManager:
 
         if route.truck is not None:
             raise ValueError('This route already has an assigned truck!')
-
-        if route.total_distance <= 8000:
-            truck = Truck('Scania', len(route.stops))
-        elif 8000 < route.total_distance <= 10000:
-            truck = Truck('Man')
-        elif 10000 < route.total_distance <= 13000:
-            truck = Truck('Actros')
-        else:
-            raise ValueError('No truck with such km range!')
-
+        
+        total_distance = route.total_distance
+        departure_time = route.departure_time
+        arrival_time = route.arrival_time
+        
+        truck = self.app_data.find_suitable_truck(route.id, total_distance, departure_time, arrival_time)
         route.truck = truck
-        return f'Truck assigned to route:\n{truck}'
+
+        return f'Truck with ID: [{truck.id}] assigned to route with ID: [{route.id}]!'

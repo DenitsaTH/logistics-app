@@ -11,13 +11,12 @@ class LogisticsFacade:
         self.package_manager = PackageManager(self.app_data)  # manages Packages
         self.route_manager = RouteManager(self.app_data)  # manages Routes
         self.truck_manager = TruckManager(self.app_data)  # manages trucks
-        self.report_manager = ReportManager(self.app_data)  # managers reports about packages, routes and trucks
+        # self.report_manager = ReportManager(self.app_data)  # managers reports about packages, routes and trucks
 
 
     def create_route(self, *stops):
-        self.route_manager.generate_route(*stops)
-        return "Route successfully added!"
-
+        return self.route_manager.generate_route(*stops)
+    
 
     def create_package(self, start_point, end_point, weight, *customer_info):
         return self.package_manager.log_package(start_point, end_point, weight, *customer_info)

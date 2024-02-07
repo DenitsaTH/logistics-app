@@ -1,6 +1,6 @@
 logistics_facade.create_route('BRI', 'SYD', 'MEL')
+logistics_facade.create_route('PER', 'ASP', 'DAR')
+logistics_facade.create_route('BRI', 'ASP', 'DAR')
 logistics_facade.assign_truck_to_route(1)
 logistics_facade.create_package('SYD', 'MEL', 45, 'Petar', 'Petrov', 'pesho@gmail.com')
-logistics_facade.assign_package_to_route(1)
-logistics_facade.view_package_information(1)
 exit
