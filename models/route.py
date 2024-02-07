@@ -4,11 +4,16 @@ from datetime import datetime, timedelta, time
 class Route:
     DEFAULT_DEPARTURE_DATETIME = datetime.combine(datetime.today() + timedelta(1), time(hour=6))
 
-    def __init__(self, id: int, distances: list, *stops) -> None:
+    def __init__(self, id: int, distances: list, departure_time=None, *stops) -> None:
+
+        if departure_time is None:
+            self.departure_time = Route.DEFAULT_DEPARTURE_DATETIME
+        else:
+            self.departure_time = departure_time
+            
         self.id = id
-        self.stops = [s for s in stops]
         self.distances = distances
-        self.departure_date_time = Route.DEFAULT_DEPARTURE_DATETIME
+        self.stops = stops
         self.truck = None
 
     @property
@@ -44,3 +49,4 @@ class Route:
                 return {1: 'st', 2: 'nd', 3: 'rd'}.get(d % 10, 'th')
 
         return t.strftime(format_string).replace('{S}', str(t.day) + suffix(t.day))
+

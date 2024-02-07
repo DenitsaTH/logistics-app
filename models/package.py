@@ -10,6 +10,7 @@ class Package:
         self.end_location = end_location
         self.weight = weight
         self.contact_info = contact_info
+        self.is_assigned = False
 
 
     def __str__(self):

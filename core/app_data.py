@@ -5,14 +5,36 @@ from models.truck import Truck
 
 class AppData:
     def __init__(self) -> None:
-        self.pending_packages = []  # all packages that are pending (have not be loaded on a specific truck)
-        self.routes: list[Route] = []  # all generated routes (they have trucks and the trucks have packages)
+        self._trucks = list[Truck] # all trucks
+        self._routes: list[Route] = []  # all generated routes
+        self._packages = list[Package]  # all packages 
+        
+
+    @property
+    def packages(self):
+        return tuple(self._packages)
+    
+
+    @property
+    def routes(self):
+        return tuple(self._routes)
+    
+
+    @property
+    def trucks(self):
+        return tuple(self._trucks)
+
 
     def add_package(self, package: Package):
-        self.pending_packages.append(package)
+        self._packages.append(package)
 
     def add_route(self, route: Route):
-        self.routes.append(route)
+        self._routes.append(route)
+
+
+    def add_truck(self, truck: Truck):
+        pass
+
 
     def assign_package_to_route(self, package_id: int):
         # find package by id in self.pending_packages
