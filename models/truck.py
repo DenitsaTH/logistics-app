@@ -5,7 +5,7 @@ class Truck:
         self._capacity = capacity
         self._km_range = km_range
         self._taken_time_slots = {}
-
+                                  
 
     @property
     def id(self):

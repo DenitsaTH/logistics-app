@@ -11,6 +11,7 @@ class Package:
         self.weight = weight
         self.contact_info = contact_info
         self.is_assigned = False
+        self.connected_route = None
 
 
     def __str__(self):

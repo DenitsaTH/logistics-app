@@ -1,6 +1,5 @@
 from models.route import Route
 from core.app_data import AppData
-from models.truck import Truck
 
 
 class RouteManager:

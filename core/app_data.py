@@ -45,23 +45,23 @@ class AppData:
 
 
     def assign_package_to_route(self, package_id: int):
-        # find package by id in self.pending_packages
         package = self.get_package(package_id)
-        # looks for such a route in self.routes (hint: slice notation)
+
         package_start_location = package.start_location
         package_end_location = package.end_location
         package_kg = package.weight
 
         route = self.find_suitable_route(package_start_location, package_end_location, package_kg)
-        # checks it truck exists; checks truck capacity [42, 42, 42, 0]
+
         if route:
-            route.truck.add_package(package)
-            self.pending_packages.remove(package)
-            return f'Package #{package_id} bound for {package_end_location}'
+            route.add_package(package)
+            package.connected_route = route.id
+            package.is_assigned = True
+            if route.get_capacity(package_start_location, package_end_location, package_kg):
+                return f'Package #{package_id} bound for {package_end_location}'
 
         return f'No suitable route for this package! The package is in pending mode!'
-        # route.truck.appnend(package)
-        # else: Raise Error
+
 
     def view_route_information(self):
         # [r.info() for r in self.routes]
@@ -84,7 +84,7 @@ class AppData:
         raise NotImplementedError
 
     def get_package(self, package_id: int):
-        for package in self.pending_packages:
+        for package in self.packages:
             if package.id == package_id:
                 return package
 

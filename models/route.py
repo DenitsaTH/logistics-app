@@ -1,4 +1,6 @@
 from datetime import datetime, timedelta, time
+from models.package import Package
+from models.truck import Truck
 
 
 class Route:
@@ -15,8 +17,9 @@ class Route:
         else:
             self.departure_time = departure_time
         
-        self.stops = stops
+        self.stops = stops 
         self.truck = None
+        self.packages = []
 
 
     @property
@@ -25,9 +28,23 @@ class Route:
     
 
     @property
+    def route_capacity(self):
+        return [self.truck.capacity] * len(self.stops)
+
+
+    @route_capacity.setter
+    def route_capacity(self, value):
+        self._route_capacity = value
+    
+
+    @property
     def arrival_time(self):
         time_to_travel_in_mins = int((self.total_distance / Route.DEFAULT_SPEED) * 60)
         return self.departure_time + timedelta(minutes=time_to_travel_in_mins)
+    
+
+    def add_package(self, package: Package):
+        self.packages.append(package)
     
 
     def find_next_stop_arrival_time(self):
@@ -41,6 +58,28 @@ class Route:
             current_slot = arrival_time
 
         return time_slots
+    
+
+    def get_capacity(self, start_location: str, end_location: str, package_kg):
+        route_capacity = [self.truck.capacity] * len(self.stops)
+        start_idx, end_idx = 0, 0
+        enough_capacity = True
+
+        for i in range(len(self.stops)):
+            if self.stops[i] == start_location:
+                start_idx = i
+            if self.stops[i] == end_location:
+                end_idx = i
+
+        for i in range(start_idx, end_idx):
+            if package_kg > route_capacity[i]:
+                enough_capacity = False
+                break
+
+        if enough_capacity:
+            route_capacity = [r - package_kg for r in route_capacity if r in route_capacity[start_idx:end_idx]]
+            return route_capacity
+        return
 
 
     def custom_strftime(self, format_string, t):

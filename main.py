@@ -10,7 +10,6 @@ with open(file_path, 'r') as file:
 
 
     while line != 'exit':
-
         try:
             output_buffer = io.StringIO()
             exec(f"output_buffer.write({line})", {"logistics_facade": logistics_facade}, {"output_buffer": output_buffer})
