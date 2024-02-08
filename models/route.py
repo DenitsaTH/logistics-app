@@ -28,16 +28,6 @@ class Route:
     
 
     @property
-    def route_capacity(self):
-        return [self.truck.capacity] * len(self.stops)
-
-
-    @route_capacity.setter
-    def route_capacity(self, value):
-        self._route_capacity = value
-    
-
-    @property
     def arrival_time(self):
         time_to_travel_in_mins = int((self.total_distance / Route.DEFAULT_SPEED) * 60)
         return self.departure_time + timedelta(minutes=time_to_travel_in_mins)
