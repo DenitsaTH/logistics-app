@@ -22,19 +22,23 @@ class Route:
         self.packages = []
         self.delivery_weight_per_stop = [0] * len(stops)
 
+
     @property
     def total_distance(self):
         return sum(self.distances)
+
 
     @property
     def arrival_time(self):
         time_to_travel_in_mins = int((self.total_distance / Route.DEFAULT_SPEED) * 60)
         return self.departure_time + timedelta(minutes=time_to_travel_in_mins)
 
+
     def add_package(self, package: Package):
         self.packages.append(package)
 
-    def find_next_stop_arrival_time(self):
+
+    def find_arrival_times(self):
         time_slots = [self.departure_time]
         current_slot = self.departure_time
 
@@ -45,6 +49,7 @@ class Route:
             current_slot = arrival_time
 
         return time_slots
+
 
     def get_capacity(self, start_location: str, end_location: str, package_kg):
         route_capacity = [self.truck.capacity] * len(self.stops)
@@ -71,9 +76,10 @@ class Route:
             return route_capacity
         return
 
+
     def get_next_stop(self):
         datetime_now = datetime.now()
-        slots = self.find_next_stop_arrival_time()
+        slots = self.find_arrival_times()
 
         if slots:
             for i in range(len(slots) - 1):
@@ -82,6 +88,7 @@ class Route:
                 if current_slot <= datetime_now <= next_slot:
                     return self.stops[i + 1], next_slot
         return '', ''
+
 
     def custom_strftime(self, format_string, t):
         def suffix(d):
@@ -92,7 +99,8 @@ class Route:
 
         return t.strftime(format_string).replace('{S}', str(t.day) + suffix(t.day))
 
+
     def __str__(self) -> str:
         result = [f'{x} ({self.custom_strftime("%b {S} %H:%Mh", y)} delivery weight: {str(z)})' for x, y, z in
-                  zip(self.stops, self.find_next_stop_arrival_time(), self.delivery_weight_per_stop)]
+                  zip(self.stops, self.find_arrival_times(), self.delivery_weight_per_stop)]
         return ' → '.join(result)

@@ -3,10 +3,9 @@ from datetime import datetime
 
 
 class ReportManager:
-    datetime_now = datetime.now()
-
     def __init__(self, app_data: AppData):
         self.app_data = app_data
+
 
     def get_route_report(self):
         datetime_now = datetime.now()
@@ -17,6 +16,7 @@ class ReportManager:
 
         return result
 
+
     def get_pending_packages_report(self):
         result = '\n-- PENDING PACKAGES: --\n'
         for package in self.app_data.packages:
@@ -26,6 +26,7 @@ class ReportManager:
         result += '\n--------'
 
         return result
+
 
     def get_package_report(self, package_id: int):
         result = ''

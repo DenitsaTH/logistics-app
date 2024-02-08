@@ -29,5 +29,3 @@ class TruckManager:
                 truck = Truck(id, 'Actros', TruckManager.garage['Actros']['capacity'], TruckManager.garage['Actros']['max_range'])
 
             self.app_data.add_truck(truck)
-
-

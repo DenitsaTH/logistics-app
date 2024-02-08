@@ -5,9 +5,9 @@ from models.truck import Truck
 
 class AppData:
     def __init__(self) -> None:
-        self._trucks: list[Truck] = [] # all trucks
-        self._routes: list[Route] = []  # all generated routes
-        self._packages: list[Package] = [] # all packages
+        self._trucks: list[Truck] = [] 
+        self._routes: list[Route] = []  
+        self._packages: list[Package] = [] 
 
     @property
     def packages(self):
@@ -44,7 +44,7 @@ class AppData:
 
 
     def assign_package_to_route(self, package_id: int):
-        package = self.get_package(package_id)
+        package = self.get_package_by_id(package_id)
 
         package_start_location = package.start_location
         package_end_location = package.end_location
@@ -62,30 +62,17 @@ class AppData:
         return f'No suitable route for this package! The package is in pending mode!'
 
 
-    def view_route_information(self):
-        # [r.info() for r in self.routes]
-        raise NotImplementedError
-
-    def view_package_information(self):
-        # new_line = '\n'
-        # datetime.now() 
-        return '\n'.join([str(p) for p in self.pending_packages])
-
-    def view_truck_information(self):
-        raise NotImplementedError
-
-    def get_route(self, route_id: int):
+    def get_route_by_id(self, route_id: int):
         for route in self.routes:
             if route.id == route_id:
                 return route
+            
 
-    def get_package_info(self, id):
-        raise NotImplementedError
-
-    def get_package(self, package_id: int):
+    def get_package_by_id(self, package_id: int):
         for package in self.packages:
             if package.id == package_id:
                 return package
+
 
     def find_suitable_route(self, start_location, end_location, package_kg):
         for route in self.routes:

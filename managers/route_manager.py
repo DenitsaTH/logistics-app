@@ -4,7 +4,6 @@ from core.app_data import AppData
 
 class RouteManager:
     id = 1
-
     DISTANCES = {
         'SYD': {'MEL': 877,
                 'ADL': 1376,
@@ -50,9 +49,11 @@ class RouteManager:
                 'DAR': 4025}
     }
 
+
     @classmethod
     def increment_id(cls):
         cls.id += 1
+
 
     def __init__(self, app_data: AppData) -> None:
         self.app_data = app_data
@@ -71,7 +72,7 @@ class RouteManager:
 
 
     def get_route_by_id(self, route_id):
-        return self.app_data.get_route(route_id)
+        return self.app_data.get_route_by_id(route_id)
 
 
     def assign_truck(self, id):

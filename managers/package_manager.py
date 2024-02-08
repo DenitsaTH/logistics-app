@@ -4,8 +4,6 @@ from models.package import Package
 
 
 class PackageManager:
-    # creates a Customer using the customer info and passes it as a param to Package()
-    
     id = 1
 
     @classmethod
