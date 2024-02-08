@@ -7,8 +7,7 @@ class AppData:
     def __init__(self) -> None:
         self._trucks: list[Truck] = [] # all trucks
         self._routes: list[Route] = []  # all generated routes
-        self._packages: list[Package] = [] # all packages 
-        
+        self._packages: list[Package] = [] # all packages
 
     @property
     def packages(self):
