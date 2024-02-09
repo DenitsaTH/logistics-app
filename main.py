@@ -1,7 +1,7 @@
 import io
 from core.logistics_facade import LogisticsFacade
 
-file_path = 'client_code.txt'
+file_path = 'use_cases/use_case4.txt'
 logistics_facade = LogisticsFacade()
 
 with open(file_path, 'r') as file:

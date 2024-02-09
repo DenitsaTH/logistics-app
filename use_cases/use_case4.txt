@@ -1,0 +1,8 @@
+logistics_facade.create_package('BRI', 'SYD', 45, 'Gosho', 'Goshev', 'gosho@abv.bg')
+logistics_facade.create_package('SYD', 'MEL', 30, 'Pesho', 'Peshov', 'pesho@gmail.com')
+logistics_facade.create_package('PER', 'DAR', 20, 'Ivan', 'Ivanov', 'vankata@abv.bg')
+logistics_facade.create_route('BRI', 'SYD', 'MEL')
+logistics_facade.assign_truck_to_route(1)
+logistics_facade.assign_package_to_route(1)
+logistics_facade.view_pending_packages_information()
+exit

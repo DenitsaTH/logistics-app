@@ -36,7 +36,7 @@ class LogisticsFacade:
         return self.app_data.assign_package_to_route(package_id)
 
 
-    def view_all_packages_information(self):
+    def view_pending_packages_information(self):
         return self.report_manager.get_pending_packages_report()
 
 

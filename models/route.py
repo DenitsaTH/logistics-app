@@ -81,26 +81,27 @@ class Route:
         if enough_capacity:
             route_capacity = [r - package_kg for r in route_capacity if r in route_capacity[start_idx:end_idx]]
             self.delivery_weight_per_stop = [
-                package_kg if idx in range(start_idx, end_idx + 1) else self.delivery_weight_per_stop[idx]
+                package_kg if idx in range(start_idx, end_idx) else self.delivery_weight_per_stop[idx]
                 for idx in range(len(self.delivery_weight_per_stop))
             ]
             return route_capacity
         return
 
 
-    def get_next_stop(self):
+    def get_next_stop(self, end_location=None):
         datetime_now = datetime.now()
         slots = self.find_arrival_times()
 
         if slots:
+            if datetime_now < slots[0]:
+                return '', ''
+            
             for i in range(len(slots) - 1):
                 current_slot = slots[i]
                 next_slot = slots[i + 1]
-                if current_slot <= datetime_now <= next_slot:
-                    return self.stops[i + 1], next_slot
-                elif datetime_now < current_slot:
-                    return '', ''
-            return '', ''
+                if current_slot < datetime_now and self.stops[i] == end_location:
+                    return None, None
+            return self.stops[i + 1], next_slot
 
 
     def remove_stop(self):
@@ -120,6 +121,6 @@ class Route:
 
 
     def __str__(self) -> str:
-        result = [f'{x} ({self.custom_strftime("%b {S} %H:%Mh", y)} delivery weight: {str(z)})' for x, y, z in
+        result = [f'{x} ({self.custom_strftime("%b {S} %H:%Mh", y)} delivery weight: {str(z)}kg)' for x, y, z in
                   zip(self.stops, self.find_arrival_times(), self.delivery_weight_per_stop)]
         return ' → '.join(result)

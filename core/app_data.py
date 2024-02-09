@@ -50,7 +50,7 @@ class AppData:
         package_end_location = package.end_location
         package_kg = package.weight
 
-        route = self.find_suitable_route(package_start_location, package_end_location, package_kg)
+        route = self.find_suitable_route(package_start_location, package_end_location)
 
         if route:
             if route.get_capacity(package_start_location, package_end_location, package_kg):
@@ -83,11 +83,11 @@ class AppData:
                 return package
 
 
-    def find_suitable_route(self, start_location, end_location, package_kg):
+    def find_suitable_route(self, start_location, end_location):
         for route in self.routes:
             for i in range(len(route.stops)):
                 if start_location == route.stops[i] and end_location in route.stops[i + 1:]:
-                    if route.truck and route.truck.capacity >= package_kg:
+                    if route.truck:
                         return route
         return
 
