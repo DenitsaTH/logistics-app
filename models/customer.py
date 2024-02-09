@@ -34,7 +34,7 @@ class Customer:
 
 
     def __str__(self):
-        string = f'#First Name: {self.first_name}\n' \
-                 f'  #Last Name: {self.last_name}\n' \
-                 f'  #Email: {self.email}'
+        string = f'#First Name: {self._first_name}\n' \
+                 f'  #Last Name: {self._last_name}\n' \
+                 f'  #Email: {self._email}'
         return string

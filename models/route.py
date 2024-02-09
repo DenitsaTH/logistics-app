@@ -8,7 +8,7 @@ def add_days_to_now(d):
 
 
 class Route:
-    DEFAULT_DEPARTURE_DATETIME = datetime.combine(datetime.today() + timedelta(1), time(hour=6))
+    DEFAULT_DEPARTURE_DATETIME = datetime.combine(datetime.today() + timedelta(0), time(hour=6))
     DEFAULT_SPEED = 87
 
     def __init__(self, id: int, distances: list, time_delta, *stops) -> None:
@@ -53,6 +53,13 @@ class Route:
             current_slot = arrival_time
 
         return time_slots
+    
+
+    def get_arrival_time_for_stop(self, stop: str):
+        for i in range(len(self.stops)):
+            if self.stops[i] == stop:
+                result = self.find_arrival_times()[i]
+                return self.custom_strftime("%b {S} %H:%Mh", result)
 
 
     def get_capacity(self, start_location: str, end_location: str, package_kg):
@@ -94,6 +101,12 @@ class Route:
                 elif datetime_now < current_slot:
                     return '', ''
             return '', ''
+
+
+    def remove_stop(self):
+        self.stops = list(self.stops)
+        self.stops.pop()
+        self.distances.pop()
 
 
     def custom_strftime(self, format_string, t):

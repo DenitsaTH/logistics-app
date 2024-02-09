@@ -40,7 +40,7 @@ class AppData:
         for truck in self._trucks:
             if truck.km_range >= distance and not truck.is_time_slot_taken(route_id, start_time, end_time):
                 return truck
-        raise ValueError("No available truck for this time slot!")
+        raise ValueError("No available truck with this km range or capacity!")
 
 
     def assign_package_to_route(self, package_id: int):
@@ -53,13 +53,14 @@ class AppData:
         route = self.find_suitable_route(package_start_location, package_end_location, package_kg)
 
         if route:
-            route.add_package(package)
-            package.connected_route = route.id
-            package.is_assigned = True
             if route.get_capacity(package_start_location, package_end_location, package_kg):
-                return f'Package #{package_id} bound for {package_end_location}'
+                route.add_package(package)
+                package.connected_route = route.id
+                arrival_time = route.get_arrival_time_for_stop(package.end_location)
+                package.is_assigned = True
+                return f'Package #{package_id} bound for {package_end_location}. Planned arrival time: {arrival_time}'
 
-        return f'No suitable route for this package! The package is in pending mode!'
+        return f'No suitable route for package with ID [{package_id}]! The package is in pending mode!'
 
 
     def get_route_by_id(self, route_id: int):
@@ -67,6 +68,14 @@ class AppData:
             if route.id == route_id:
                 return route
             
+
+    def get_route_by_stops(self, *locations):
+        for route in self.routes:
+            for l in locations:
+                if l not in route.stops:
+                    return
+        return route
+    
 
     def get_package_by_id(self, package_id: int):
         for package in self.packages:
@@ -78,7 +87,19 @@ class AppData:
         for route in self.routes:
             for i in range(len(route.stops)):
                 if start_location == route.stops[i] and end_location in route.stops[i + 1:]:
-                    # index = route.stops.index(start_location)
                     if route.truck and route.truck.capacity >= package_kg:
                         return route
         return
+
+
+    def check_backlog_for_location(self, location: str):
+        packages = [p for p in self.packages if p.start_location == location and not p.is_assigned]
+
+        if len(packages) < 3:
+            return
+        
+        return packages, self.get_all_pending_packages_end_locations(packages)
+        
+        
+    def get_all_pending_packages_end_locations(self, packages: list[Package]):
+        return [p.end_location for p in packages]

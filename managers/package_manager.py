@@ -1,6 +1,7 @@
 from core.app_data import AppData
 from models.customer import Customer
 from models.package import Package
+from core.validation_helpers import check_params_count
 
 
 class PackageManager:
@@ -16,6 +17,7 @@ class PackageManager:
 
 
     def log_package(self, start_point, end_point, weight, *customer_info):
+        check_params_count(3, len(customer_info), 'customer info')
         customer_info = Customer(*customer_info)
         package = Package(PackageManager.id, start_point, end_point, weight, customer_info)
         self.app_data.add_package(package)

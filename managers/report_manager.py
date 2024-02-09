@@ -18,14 +18,15 @@ class ReportManager:
 
 
     def get_pending_packages_report(self):
-        result = '\n-- PENDING PACKAGES: --\n'
+        result = ''
         for package in self.app_data.packages:
             if not package.is_assigned:
                 result += f'\n{package}'
 
-        result += '\n--------'
-
-        return result
+        if not result:
+            return "\n-- NO PENDING PACKAGES --\n"
+        
+        return '\n-- PENDING PACKAGES: --\n' + result + '\n--------'
 
 
     def get_package_report(self, package_id: int):

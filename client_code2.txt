@@ -1,0 +1,9 @@
+logistics_facade.create_package('BRI', 'SYD', 30, 'Gosho', 'Goshev', 'gosho@abv.bg')
+logistics_facade.create_package('BRI', 'DAR', 30, 'Gosho', 'Goshev', 'gosho@abv.bg')
+logistics_facade.create_package('BRI', 'MEL', 30, 'Gosho', 'Goshev', 'gosho@abv.bg')
+logistics_facade.create_package('BRI', 'ASP', 30, 'Gosho', 'Goshev', 'gosho@abv.bg')
+logistics_facade.create_package('BRI', 'ADL', 30, 'Gosho', 'Goshev', 'gosho@abv.bg')
+logistics_facade.create_package('BRI', 'PER', 30, 'Gosho', 'Goshev', 'gosho@abv.bg')
+logistics_facade.bulk_assign('BRI')
+logistics_facade.view_route_information()
+exit

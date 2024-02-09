@@ -60,11 +60,12 @@ class RouteManager:
 
     
     def generate_route(self, time_delta, *stops):
-        distances = []  # distances =  [877, 1765]
+        distances = []
 
         for i in range(len(stops) - 1):
             distances.append(RouteManager.DISTANCES[stops[i]][stops[i + 1]])
 
+        
         route = Route(RouteManager.id, distances, time_delta, *stops)
         self.app_data.add_route(route)
         RouteManager.increment_id
@@ -89,3 +90,4 @@ class RouteManager:
         route.truck = truck
 
         return f'Truck with ID: [{truck.id}] assigned to route with ID: [{route.id}]!'
+    
