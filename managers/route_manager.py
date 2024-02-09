@@ -59,13 +59,13 @@ class RouteManager:
         self.app_data = app_data
 
     
-    def generate_route(self, *stops):
+    def generate_route(self, time_delta, *stops):
         distances = []  # distances =  [877, 1765]
 
         for i in range(len(stops) - 1):
             distances.append(RouteManager.DISTANCES[stops[i]][stops[i + 1]])
 
-        route = Route(RouteManager.id, distances, None, *stops)
+        route = Route(RouteManager.id, distances, time_delta, *stops)
         self.app_data.add_route(route)
         RouteManager.increment_id
         return f'Below route successfully added:\n{str(route)}'

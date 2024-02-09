@@ -29,7 +29,6 @@ class ReportManager:
 
 
     def get_package_report(self, package_id: int):
-        result = ''
         route_id = 0
         for package in self.app_data.packages:
             if package.id == package_id:
@@ -40,4 +39,5 @@ class ReportManager:
                     if route.id == route_id:
                         if route.get_next_stop()[0] and route.get_next_stop()[1]:
                             return f'Package bound for {route.get_next_stop()[0]} at {route.get_next_stop()[1]} '
-                        return f'Package delivered at {package.end_location}'
+                        return f"Package waiting for load at {package.start_location}"
+                    return f'Package delivered at {package.end_location}'

@@ -13,8 +13,9 @@ class LogisticsFacade:
         self.truck_manager = TruckManager(self.app_data)  
         self.report_manager = ReportManager(self.app_data)  
 
-    def create_route(self, *stops):
-        return self.route_manager.generate_route(*stops)
+
+    def create_route(self, *stops, time_delta=0):
+        return self.route_manager.generate_route(time_delta, *stops)
 
 
     def create_package(self, start_point, end_point, weight, *customer_info):

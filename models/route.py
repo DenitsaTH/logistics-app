@@ -3,19 +3,23 @@ from models.package import Package
 from models.truck import Truck
 
 
+def add_days_to_now(d):
+    return datetime.combine(datetime.today() + timedelta(d), time(hour=6))
+
+
 class Route:
-    DEFAULT_DEPARTURE_DATETIME = datetime.combine(datetime.today() + timedelta(0), time(hour=6))
+    DEFAULT_DEPARTURE_DATETIME = datetime.combine(datetime.today() + timedelta(1), time(hour=6))
     DEFAULT_SPEED = 87
 
-    def __init__(self, id: int, distances: list, departure_time=None, *stops) -> None:
+    def __init__(self, id: int, distances: list, time_delta, *stops) -> None:
 
         self.id = id
         self.distances = distances
 
-        if departure_time is None:
+        if time_delta == 0:
             self.departure_time = Route.DEFAULT_DEPARTURE_DATETIME
         else:
-            self.departure_time = departure_time
+            self.departure_time = add_days_to_now(time_delta)
 
         self.stops = stops
         self.truck = None
@@ -87,7 +91,9 @@ class Route:
                 next_slot = slots[i + 1]
                 if current_slot <= datetime_now <= next_slot:
                     return self.stops[i + 1], next_slot
-        return '', ''
+                elif datetime_now < current_slot:
+                    return '', ''
+            return '', ''
 
 
     def custom_strftime(self, format_string, t):
