@@ -1,5 +1,7 @@
-logistics_facade.create_route('BRI', 'SYD', 'MEL')
-logistics_facade.assign_truck_to_route(1)
 logistics_facade.create_package('BRI', 'SYD', 45, 'Gosho', 'Goshev', 'gosho@abv.bg')
 logistics_facade.assign_package_to_route(1)
+logistics_facade.create_route('BRI', 'SYD', 'MEL')
+logistics_facade.assign_truck_to_route(1)
+logistics_facade.assign_package_to_route(1)
+logistics_facade.view_route_information()
 exit

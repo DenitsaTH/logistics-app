@@ -88,20 +88,21 @@ class Route:
         return
 
 
-    def get_next_stop(self, end_location=None):
+    def get_next_stop(self, end_location=None, start_location=None):
         datetime_now = datetime.now()
         slots = self.find_arrival_times()
 
         if slots:
             if datetime_now < slots[0]:
-                return '', ''
+                return start_location, ''
             
             for i in range(len(slots) - 1):
                 current_slot = slots[i]
-                next_slot = slots[i + 1]
                 if current_slot < datetime_now and self.stops[i] == end_location:
                     return None, None
-            return self.stops[i + 1], next_slot
+            if current_slot < datetime_now and self.stops[i] == start_location:
+                return start_location, slots[i]
+            return self.stops[i], current_slot
 
 
     def remove_stop(self):

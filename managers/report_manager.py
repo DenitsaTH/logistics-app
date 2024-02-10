@@ -32,14 +32,17 @@ class ReportManager:
     def get_package_report(self, package_id: int):
         route_id = 0
         package = self.app_data.get_package_by_id(package_id)
+        
         if not package.is_assigned:
-            return f'Package with ID [{package_id}] is in pending mode!\nCurrent location: {package.start_location}'
+            return f'Package with ID [{package_id}] is in pending mode at {package.start_location} warehouse'
+        
         route_id = package.connected_route
         route = self.app_data.get_route_by_id(route_id)
-        location, time = route.get_next_stop(end_location=package.end_location)
-        
-        if location == '':
-            return f"Package waiting for load at {package.start_location}"
-        elif location is None:
+        location, time = route.get_next_stop(end_location=package.end_location, start_location=package.start_location)
+        arrival_time = route.get_arrival_time_for_stop(package.end_location)
+
+        if location is None:
             return f'Package delivered at {package.end_location}'
-        return f'Package bound for {package.end_location} at {time}'
+        elif location == package.start_location:
+            return f'Package to be loaded at {location} at {time}. Final stop: {package.end_location} at {arrival_time}'
+        return f'Package en route. Next stop: {location} at {time}. Final stop: {package.end_location} at {arrival_time}'

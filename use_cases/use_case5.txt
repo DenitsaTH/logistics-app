@@ -5,7 +5,7 @@ logistics_facade.create_package('SYD', 'MEL', 30, 'Pesho', 'Peshov', 'pesho@gmai
 logistics_facade.assign_package_to_route(1)
 logistics_facade.assign_package_to_route(2)
 logistics_facade.create_package('PER', 'DAR', 20, 'Ivan', 'Ivanov', 'vankata@abv.bg')
-logistics_facade.search_for_package_per_client_request(3)
-logistics_facade.search_for_package_per_client_request(2)
 logistics_facade.search_for_package_per_client_request(1)
+logistics_facade.search_for_package_per_client_request(2)
+logistics_facade.search_for_package_per_client_request(3)
 exit
