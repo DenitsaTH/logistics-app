@@ -56,6 +56,7 @@ class RouteManager:
     def __init__(self, app_data: AppData) -> None:
         self.app_data = app_data
 
+
     def generate_route(self, time_delta, *stops):
         distances = []
 
@@ -64,11 +65,13 @@ class RouteManager:
 
         route = Route(RouteManager.id, distances, time_delta, *stops)
         self.app_data.add_route(route)
-        RouteManager.increment_id
-        return f'Below route with ID [{self.id}] successfully added:\n{str(route)}'
+        RouteManager.increment_id()
+        return f'Below route with ID [{route.id}] successfully added:\n{str(route)}'
+
 
     def get_route_by_id(self, route_id):
         return self.app_data.get_route_by_id(route_id)
+
 
     def assign_truck(self, id):
         route = self.get_route_by_id(id)

@@ -15,36 +15,43 @@ class LogisticsFacade:
         self.truck_manager = TruckManager(self.app_data)
         self.report_manager = ReportManager(self.app_data)
 
+
     def create_route(self, *stops, time_delta=0):
         check_params_count(2, len(stops), 'creating route')
         return self.route_manager.generate_route(time_delta, *stops)
+
 
     def create_package(self, start_point, end_point, weight, *customer_info):
         check_params_count(4, len(inspect.signature(self.create_package).parameters), 'creating package')
         return self.package_manager.log_package(start_point, end_point, weight, *customer_info)
 
+
     def assign_truck_to_route(self, route_id: int):
         check_params_count(1, len(inspect.signature(self.assign_truck_to_route).parameters), 'assigning truck to route')
         return self.route_manager.assign_truck(route_id)
 
+
     def assign_package_to_route(self, package_id: int):
-        check_params_count(1, len(inspect.signature(self.assign_package_to_route).parameters),
-                           'assigning package to route')
+        check_params_count(1, len(inspect.signature(self.assign_package_to_route).parameters), 'assigning package to route')
         return self.app_data.assign_package_to_route(package_id)
+
 
     def view_pending_packages_information(self):
         return self.report_manager.get_pending_packages_report()
 
+
     def view_route_information(self):
         return self.report_manager.get_route_report()
 
+
     def search_for_package_per_client_request(self, package_id):
-        check_params_count(1, len(inspect.signature(self.search_for_package_per_client_request).parameters),
-                           'searching for package')
+        check_params_count(1, len(inspect.signature(self.search_for_package_per_client_request).parameters), 'searching for package')
         return self.report_manager.get_package_report(package_id)
+
 
     def get_route_by_stops(self, *locations):
         return self.app_data.get_route_by_stops(*locations)
+
 
     def bulk_assign(self, location: str):
         check_params_count(1, len(inspect.signature(self.bulk_assign).parameters), 'bulk assign')

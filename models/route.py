@@ -8,7 +8,7 @@ def add_days_to_now(d):
 
 
 class Route:
-    DEFAULT_DEPARTURE_DATETIME = datetime.combine(datetime.today() + timedelta(1), time(hour=6))
+    DEFAULT_DEPARTURE_DATETIME = datetime.combine(datetime.today() + timedelta(0), time(hour=6))
     DEFAULT_SPEED = 87
 
     def __init__(self, id: int, distances: list, time_delta, *stops) -> None:
