@@ -70,11 +70,17 @@ class RouteManager:
 
 
     def get_route_by_id(self, route_id):
-        return self.app_data.get_route_by_id(route_id)
+        route = self.app_data.get_route_by_id(route_id)
+        if route:
+            return self.app_data.get_route_by_id(route_id)
+        return
 
 
     def assign_truck(self, id):
         route = self.get_route_by_id(id)
+
+        if route is None:
+            raise ValueError('No route with such ID!')
 
         if route.truck is not None:
             raise ValueError('This route already has an assigned truck!')
