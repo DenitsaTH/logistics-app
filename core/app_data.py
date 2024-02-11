@@ -96,7 +96,7 @@ class AppData:
         packages = [p for p in self.packages if p.start_location == location and not p.is_assigned]
 
         if len(packages) < 3:
-            return
+            return None, None
         
         return packages, self.get_all_pending_packages_end_locations(packages)
         

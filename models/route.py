@@ -88,21 +88,16 @@ class Route:
         return
 
 
-    def get_next_stop(self, end_location=None, start_location=None):
+    def get_next_stop(self, start_location=None):
         datetime_now = datetime.now()
         slots = self.find_arrival_times()
 
-        if slots:
-            if datetime_now < slots[0]:
-                return start_location, ''
-            
-            for i in range(len(slots) - 1):
-                current_slot = slots[i]
-                if current_slot < datetime_now and self.stops[i] == end_location:
-                    return None, None
-            if current_slot < datetime_now and self.stops[i] == start_location:
-                return start_location, slots[i]
-            return self.stops[i], current_slot
+        start_location_index = self.stops.index(start_location)
+        load_time = slots[start_location_index]
+        if datetime_now < load_time:
+            return start_location, slots[start_location_index], 'to be loaded'
+        
+        self.find_next_stop_and_arrival_time(datetime_now, slots)
 
 
     def remove_stop(self):
@@ -119,6 +114,15 @@ class Route:
                 return {1: 'st', 2: 'nd', 3: 'rd'}.get(d % 10, 'th')
 
         return t.strftime(format_string).replace('{S}', str(t.day) + suffix(t.day))
+
+
+    def find_next_stop_and_arrival_time(self, datetime_now, slots):
+        for i in range(len(slots) - 1, -1, -1):
+            current_slot = slots[i]
+            if current_slot < datetime_now:
+                if i == len(slots) - 1:
+                    return self.stops[i], slots[i], 'delivered'
+                return self.stops[i + 1], slots[i + 1], 'en route'
 
 
     def __str__(self) -> str:
