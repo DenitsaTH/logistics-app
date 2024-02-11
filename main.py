@@ -1,23 +1,22 @@
-import io
 from core.logistics_facade import LogisticsFacade
+from core.menu import Menu
 
-file_path = 'use_cases/use_case5.txt'
+
+
 logistics_facade = LogisticsFacade()
+menu = Menu(logistics_facade)
+print(menu.menu_str)
+user_input = input('Type [0] to view the menu or choose a command: \n')
 
-with open(file_path, 'r') as file:
-    line = file.readline().strip()
-    output = []
+while user_input != 'exit':
 
+    try:
+        execution = menu.execute(user_input)
+        print(execution)
+        user_input = input('\nType [0] to view the menu or choose a command:  \n')
 
-    while line != 'exit':
-        try:
-            output_buffer = io.StringIO()
-            exec(f"output_buffer.write({line})", {"logistics_facade": logistics_facade}, {"output_buffer": output_buffer})
-            output.append(output_buffer.getvalue())
-            
-        except Exception as err:
-            output.append(str(err)) # print output
-        
-        line = file.readline().strip() 
+    except Exception as err:
+        print(err.args[0])
+        user_input = input('\nType [0] to view the menu or choose a command:  \n')
 
-print('\n'.join(output))
+print('\nGood Bye!')

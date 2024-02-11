@@ -13,8 +13,8 @@ class Customer:
             raise ValueError(f'!!! ERROR EMAIL ADDRESS: "{email}"!!!\n'
                              f'   -Email address has to be between 5-30 symbols and it has to contain " @ . " symbols!')
 
-        self._first_name = first_name
-        self._last_name = last_name
+        self._first_name = first_name.capitalize()
+        self._last_name = last_name.capitalize()
         self._email = email
 
 

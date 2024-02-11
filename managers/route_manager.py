@@ -49,27 +49,24 @@ class RouteManager:
                 'DAR': 4025}
     }
 
-
     @classmethod
     def increment_id(cls):
         cls.id += 1
 
-
     def __init__(self, app_data: AppData) -> None:
         self.app_data = app_data
 
-    
+
     def generate_route(self, time_delta, *stops):
         distances = []
 
         for i in range(len(stops) - 1):
             distances.append(RouteManager.DISTANCES[stops[i]][stops[i + 1]])
 
-        
         route = Route(RouteManager.id, distances, time_delta, *stops)
         self.app_data.add_route(route)
-        RouteManager.increment_id
-        return f'Below route successfully added:\n{str(route)}'
+        RouteManager.increment_id()
+        return f'Below route with ID [{route.id}] successfully added:\n{str(route)}'
 
 
     def get_route_by_id(self, route_id):
@@ -81,13 +78,12 @@ class RouteManager:
 
         if route.truck is not None:
             raise ValueError('This route already has an assigned truck!')
-        
+
         total_distance = route.total_distance
         departure_time = route.departure_time
         arrival_time = route.arrival_time
-        
+
         truck = self.app_data.find_suitable_truck(route.id, total_distance, departure_time, arrival_time)
         route.truck = truck
 
         return f'Truck with ID: [{truck.id}] assigned to route with ID: [{route.id}]!'
-    

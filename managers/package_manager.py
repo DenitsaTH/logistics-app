@@ -24,5 +24,5 @@ class PackageManager:
 
         PackageManager.increment_id()
 
-        return f"Package successfully logged!\n{str(package)}"
+        return f"\nPackage successfully logged!\n{str(package)}"
     
