@@ -97,7 +97,7 @@ class Route:
         if datetime_now < load_time:
             return start_location, slots[start_location_index], 'to be loaded'
         
-        self.find_next_stop_and_arrival_time(datetime_now, slots)
+        return self.find_next_stop_and_arrival_time(datetime_now, slots)
 
 
     def remove_stop(self):
