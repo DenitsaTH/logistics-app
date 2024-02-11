@@ -2,6 +2,7 @@ import io
 from core.logistics_facade import LogisticsFacade
 from core.menu import Menu
 
+
 # file_path = 'use_cases/use_case4.txt'
 logistics_facade = LogisticsFacade()
 menu = Menu(logistics_facade)

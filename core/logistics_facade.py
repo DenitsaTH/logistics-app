@@ -48,11 +48,11 @@ class LogisticsFacade:
 
     def bulk_assign(self, location: str):
         check_params_count(1, len(inspect.signature(self.bulk_assign).parameters), 'bulk assign')
-        if not self.app_data.check_backlog_for_location(location):
-            return f"No backlog for this {location}"
-
         packages, end_locations = self.app_data.check_backlog_for_location(location)
-        locations = [location] + end_locations
+        if not packages:
+            return f"No backlog for this {location}"
+          
+        locations = [location] + end_locations 
         self.create_route(*locations)
         route = self.get_route_by_stops(*locations)
 
