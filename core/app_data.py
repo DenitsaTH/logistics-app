@@ -67,6 +67,7 @@ class AppData:
         for route in self.routes:
             if route.id == route_id:
                 return route
+        return
             
 
     def get_route_by_stops(self, *locations):

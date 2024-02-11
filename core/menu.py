@@ -1,4 +1,5 @@
 from core.logistics_facade import LogisticsFacade
+from core.validation_helpers import ensure_valid_params_count, check_if_valid_stop, parse_to_integer
 
 
 class Menu:
@@ -13,61 +14,73 @@ class Menu:
                    '\nTO BULK ASSIGN, TYPE [5]\n' \
                    '\nTO SEARCH FOR A PACKAGE BY ID, TYPE [6]\n' \
                    '\nTO VIEW INFORMATION FOR ALL PENDING PACKAGES, TYPE [7]\n' \
-                   '\nTO VIEW INFORMATION FOR ALL ROUTES IN PROGRESS, TYPE [8]\n' \
+                   '\nTO VIEW INFORMATION FOR ALL ROUTES, TYPE [8]\n' \
                    '\nTO EXIT THE PROGRAM, TYPE [Exit]\n' \
                    '\n*_*_*_* MENU *_*_*_*\n'
 
+
+    def back_to_main_menu(self, input_str):
+        if ''.join(input_str).lower() == 'back':
+            return 'Back to main menu!'
+        
 
     def execute(self, user_input):
         cmd = user_input
 
         if cmd == '0':
             return self.menu_str
-
+        
 
         if cmd == '1':
-            print('To create a route, please enter <route stops> or type <back> to return to the main menu')
-
+            print('To create a route, please enter at least 2 <route stops> or type <back> to return to the main menu')
             stops = input('Route stops:\n').upper().split()
-
-            if ''.join(stops).lower() == 'back':
-                return 'Back to main menu!'
+            self.back_to_main_menu(stops)
+            
+            if not ensure_valid_params_count(min_expected_count=2, actual_params=len(stops)):
+                stops = input('At least 2 stops required!\n').upper().split()
+                self.back_to_main_menu(stops)
+            if not check_if_valid_stop(stops):
+                stops = input('Invalid stop(s)! Please choose from the following: SYD, MEL, ADL, ASP, BRI, DAR, PER\n').upper().split()
+                self.back_to_main_menu(stops)
 
             time_delta = input(
                 'Default departure time:\nTomorrow at 6:00\nTo choose another departure day, please enter a <number of days ahead> or <0> for default:\n')
+            self.back_to_main_menu(time_delta)
+            time_delta = parse_to_integer(time_delta)
 
-            if len(stops) < 2:
-                raise ValueError('Invalid input!')
-
-            if time_delta == '0':
-                return self.logistic_facade.create_route(*stops)
-            return self.logistic_facade.create_route(*stops, time_delta=int(time_delta))
+            while True:
+                if not isinstance(time_delta, int):
+                    time_delta = input('Enter a number for days ahead!\n')
+                elif time_delta == 0:
+                    return self.logistic_facade.create_route(*stops)
+                return self.logistic_facade.create_route(*stops, time_delta=int(time_delta))
 
 
         if cmd == '2':
             print('To assign a truck to route, please enter <route ID> or type <back> to return to the main menu:')
-
             route_id = input('Route id:\n')
+            self.back_to_main_menu(route_id)
+        
+            if not ensure_valid_params_count(max_expected=1, actual_params=len(route_id.split())):
+                route_id = input('Please input only one ID!\n')
+            
+            integer_value = parse_to_integer(route_id)
+            self.back_to_main_menu(route_id)
 
-            if route_id == 'back':
-                return 'Back to main menu!'
-
-            if len(route_id) != 1:
-                raise ValueError('Invalid input!')
-            return self.logistic_facade.assign_truck_to_route(int(route_id))
+            while True:
+                if not isinstance(integer_value, int):
+                    route_id = input("ID is not a valid number!\n")
+                return self.logistic_facade.assign_truck_to_route(int(route_id))
 
 
         if cmd == '3':
             print(
                 'To create a package, please enter:\n<start location>, <end location>, <weight>, <first name>, <last name>, <email> (separated by spaces)\nor type <back> to return to the main menu:\n')
-
             input_line = input('Package details: \n').split()
+            self.back_to_main_menu(input_line)
 
-            if ''.join(input_line).lower() == 'back':
-                return 'Back to main menu!'
-
-            if len(input_line) < 6 or len(input_line) > 6:
-                raise ValueError('Invalid input!')
+            if not ensure_valid_params_count(min_expected_count=6, max_expected=6, actual_params=len(input_line)):
+                input_line = input('One of the required fields is missing or too many fields!\n').split()
 
             start_location = input_line[0].upper()
             end_location = input_line[1].upper()
@@ -79,23 +92,31 @@ class Menu:
         if cmd == '4':
             print(
                 'To assign a package to route, please enter <package ID> or type <back> to return to the main menu: \n')
-
             package_id = input('Package id: \n')
+            self.back_to_main_menu(package_id)
 
-            if package_id.lower() == 'back':
-                return 'Back to main menu!'
+            if not ensure_valid_params_count(max_expected=1, actual_params=len(package_id)):
+                package_id = input('Please input only one ID!\n')
             
-            return self.logistic_facade.assign_package_to_route(int(package_id))
+            integer_value = parse_to_integer(package_id)
+            self.back_to_main_menu(package_id)
+            
+            while True:
+                if not isinstance(integer_value, int):
+                    package_id = input("ID is not a valid number!\n")
+                return self.logistic_facade.assign_package_to_route(int(package_id))
 
 
         if cmd == '5':
             print('For bulk assign, please enter <warehouse name> or type <back> to return to the main menu: \n')
             warehouse_name = input('Warehouse name: \n').upper()
+            self.back_to_main_menu(warehouse_name)
 
-            if warehouse_name.lower() == 'back':
-                return 'Back to main menu!'
-            if len(warehouse_name) != 3:
-                raise ValueError('Invalid input!')
+            if not check_if_valid_stop(warehouse_name):
+                warehouse_name = input('Invalid warehouse name! Please choose from the following: SYD, MEL, ADL, ASP, BRI, DAR, PER\n').upper().split()
+                self.back_to_main_menu(warehouse_name)
+            if not ensure_valid_params_count(max_expected=3, min_expected_count=3, actual_params=len(warehouse_name)):
+                warehouse_name = input('Warehouse name should consist of exactly 3 letters!\n')
             return self.logistic_facade.bulk_assign(warehouse_name)
 
 
@@ -103,10 +124,15 @@ class Menu:
             print(
                 'To search for a package by ID, please enter <package ID> or type <back> to return to the main menu: \n')
             package_id = input('Package id: \n')
+            self.back_to_main_menu(package_id)
 
-            if ''.join(package_id).lower() == 'back':
-                return 'Back to main menu!'
-            return self.logistic_facade.search_for_package_per_client_request(int(package_id))
+            integer_value = parse_to_integer(package_id)
+            self.back_to_main_menu(package_id)
+            
+            while True:
+                if not isinstance(integer_value, int):
+                    package_id = input("ID is not a valid number!\n")
+                return self.logistic_facade.search_for_package_per_client_request(int(package_id))
 
 
         if cmd == '7':
@@ -114,6 +140,10 @@ class Menu:
 
 
         if cmd == '8':
-            return self.logistic_facade.view_route_information()
+            input_line = input('Type <all> to view information for all routes or <in progress> to view information only for routes in progress\n')
+            if input_line == 'all':
+                return self.logistic_facade.view_route_information('all')
+            return self.logistic_facade.view_route_information('in progress')
+
 
         return 'Invalid command!'

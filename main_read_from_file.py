@@ -16,7 +16,7 @@ with open(file_path, 'r') as file:
             output.append(output_buffer.getvalue())
             
         except Exception as err:
-            output.append(str(err)) # print output
+            output.append(str(err))
         
         line = file.readline().strip() 
 
