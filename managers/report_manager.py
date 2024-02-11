@@ -7,15 +7,18 @@ class ReportManager:
         self.app_data = app_data
 
 
-    def get_route_report(self):
+    def get_route_report(self, rule):
         datetime_now = datetime.now()
         result = ''
         for route in self.app_data.routes:
-            if route.departure_time <= datetime_now <= route.arrival_time:
-                slots = route.find_arrival_times()
-                next_stop, arrival_time, status = route.find_next_stop_and_arrival_time(datetime_now, slots)
-                result += f'\n{str(route)}\n-- Next stop: {next_stop}\nArrival time: {arrival_time} --'
-
+            slots = route.find_arrival_times()
+            next_stop, arrival_time, status = route.find_next_stop_and_arrival_time(datetime_now, slots)
+            current_res_str = f'\n{str(route)}\n-- Next stop: {next_stop}\nArrival time: {arrival_time} --'
+            
+            if rule == 'all':
+                result += current_res_str
+            if rule == 'in progress' and route.departure_time <= datetime_now <= route.arrival_time:
+                result += current_res_str
         return result
 
 
