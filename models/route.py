@@ -95,8 +95,7 @@ class Route:
         start_location_index = self.stops.index(start_location)
         load_time = slots[start_location_index]
         if datetime_now < load_time:
-            return start_location, slots[start_location_index], 'to be loaded'
-        
+            return start_location, slots[start_location_index]
         return self.find_next_stop_and_arrival_time(datetime_now, slots)
 
 
@@ -117,12 +116,14 @@ class Route:
 
 
     def find_next_stop_and_arrival_time(self, datetime_now, slots):
+        if datetime_now < slots[0]:
+            return self.stops[0], slots[0]
         for i in range(len(slots) - 1, -1, -1):
             current_slot = slots[i]
             if current_slot < datetime_now:
                 if i == len(slots) - 1:
-                    return self.stops[i], slots[i], 'delivered'
-                return self.stops[i + 1], slots[i + 1], 'en route'
+                    return self.stops[i], slots[i]
+                return self.stops[i + 1], slots[i + 1]
 
 
     def __str__(self) -> str:
