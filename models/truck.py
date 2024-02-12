@@ -4,7 +4,7 @@ class Truck:
         self._brand = brand
         self._capacity = capacity
         self._km_range = km_range
-        self._taken_time_slots = {}
+        self.taken_time_slots = {}
                                   
 
     @property
@@ -27,17 +27,12 @@ class Truck:
         return self._km_range
     
 
-    @property
-    def taken_time_slots(self):
-        return self._taken_time_slots
-    
-
     def is_time_slot_taken(self, route_id, start_time, end_time):
         for k, v in self.taken_time_slots.items():
-            if start_time <= k[0] <= end_time or start_time <= k[1] <= end_time:
+            if start_time <= v[0] <= end_time or start_time <= v[1] <= end_time:
                 return True
-            self.taken_time_slots[route_id] = [start_time, end_time]
-            return False
+        self.taken_time_slots[route_id] = [start_time, end_time]
+        return False
 
 
     def __str__(self):
