@@ -14,6 +14,8 @@ class Package:
         
         if weight > 42000:
             raise ValueError('Weight еxceeds maximum truck capacity!')
+        if weight <= 0:
+            raise ValueError('Weight should be a positive number!')
         self._weight = weight
         
         self.contact_info = contact_info
