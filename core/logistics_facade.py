@@ -71,14 +71,16 @@ class LogisticsFacade:
 
 
     def save_state(self):
-        for p in self.app_data.packages:
+        with open('db/packages.txt', 'w') as file: # first reset file
+            file.truncate(0)
+        for p in self.app_data.packages: # then record all packages again
             with open('db/packages.txt', 'a') as txt_file:
                 txt_file.write(f'{p.start_location} {p.end_location} {p.weight} {p.contact_info.first_name} {p.contact_info.last_name} {p.contact_info.email} {p.is_assigned} {p.connected_route}' + '\n')
 
 
     def load_state(self):
         with open('db/packages.txt') as txt_file:
-            for line in txt_file.readlines():
+            for line in txt_file.readlines(): # instantiate all packages again
                 if line:
                     start_location, end_location, weight, *customer_info, is_assigned, connected_route = line.split()
                     self.package_manager.log_package(start_location, end_location, weight, *customer_info, is_assigned=is_assigned, connected_route=connected_route)

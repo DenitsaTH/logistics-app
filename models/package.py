@@ -1,7 +1,7 @@
 from models.customer import Customer
 
 class Package:
-    def __init__(self, id, start_location, end_location, weight: float, contact_info: Customer, is_assigned=False, connected_route=None):
+    def __init__(self, id, start_location, end_location, weight: float, contact_info: Customer, is_assigned, connected_route):
         self._id = id
 
         if len(start_location) != 3:
@@ -19,8 +19,8 @@ class Package:
         self._weight = float(weight)
         
         self.contact_info = contact_info
-        self.is_assigned = False if is_assigned == 'False' else True
-        self.connected_route = None if connected_route == 'None' else int(connected_route)
+        self.is_assigned = is_assigned
+        self.connected_route = connected_route
 
     @property
     def id(self):
