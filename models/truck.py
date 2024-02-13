@@ -1,10 +1,10 @@
 class Truck:
-    def __init__(self, id: int, brand: str, capacity: int, km_range: int) -> None:
+    def __init__(self, id: int, brand: str, capacity: int, km_range: int, taken_time_slots) -> None:
         self._id = id
         self._brand = brand
         self._capacity = capacity
         self._km_range = km_range
-        self.taken_time_slots = {}
+        self.taken_time_slots = taken_time_slots
                                   
 
     @property

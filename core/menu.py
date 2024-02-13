@@ -1,5 +1,5 @@
 from core.logistics_facade import LogisticsFacade
-from core.validation_helpers import ensure_valid_params_count, check_if_valid_stop, parse_to_integer
+from core.helpers import ensure_valid_params_count, check_if_valid_stop, parse_to_integer
 
 
 class Menu:

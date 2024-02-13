@@ -3,6 +3,7 @@ from managers.package_manager import PackageManager
 from managers.route_manager import RouteManager
 from managers.truck_manager import TruckManager
 from managers.report_manager import ReportManager
+from helpers import file_is_empty
 
 
 class LogisticsFacade:
@@ -10,10 +11,13 @@ class LogisticsFacade:
         self.app_data = AppData()
         self.package_manager = PackageManager(self.app_data)
         self.route_manager = RouteManager(self.app_data)
-        self.truck_manager = TruckManager(self.app_data)
-        self.report_manager = ReportManager(self.app_data)
 
-        self.load_state()
+        if file_is_empty('db/trucks.txt'):
+            self.truck_manager = TruckManager(self.app_data)
+        else:
+            self.load_state()
+
+        self.report_manager = ReportManager(self.app_data)
 
 
     def create_route(self, *stops, time_delta=0):
@@ -77,10 +81,24 @@ class LogisticsFacade:
             with open('db/packages.txt', 'a') as txt_file:
                 txt_file.write(f'{p.start_location} {p.end_location} {p.weight} {p.contact_info.first_name} {p.contact_info.last_name} {p.contact_info.email} {p.is_assigned} {p.connected_route}' + '\n')
 
+        with open('db/trucks.txt', 'w') as file: # first reset file
+            file.truncate(0)
+        for t in self.app_data.trucks: # then record all trucks again
+            with open('db/trucks.txt', 'a') as txt_file:
+                txt_file.write(f'{t.brand} {t.capacity} {t.km_range}' + '\n')
+                txt_file.writelines([f"{k}:{v}\n" for k, v in t.taken_time_slots.items()])
+
 
     def load_state(self):
-        with open('db/packages.txt') as txt_file:
+        with open('db/packages.txt', 'r') as txt_file:
             for line in txt_file.readlines(): # instantiate all packages again
                 if line:
                     start_location, end_location, weight, *customer_info, is_assigned, connected_route = line.split()
                     self.package_manager.log_package(start_location, end_location, weight, *customer_info, is_assigned=is_assigned, connected_route=connected_route)
+
+
+        with open('db/trucks.txt', 'r') as txt_file:
+            for line in txt_file.readlines():
+                if line:
+                    brand, capacity, km_range, taken_time_slots = line.split()
+                    self.package_manager.log_package(brand, capacity, km_range, taken_time_slots=taken_time_slots)

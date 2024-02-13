@@ -1,7 +1,7 @@
 from core.app_data import AppData
 from models.customer import Customer
 from models.package import Package
-from core.validation_helpers import ensure_valid_params_count
+from core.helpers import ensure_valid_params_count
 
 
 class PackageManager:
