@@ -13,6 +13,8 @@ class LogisticsFacade:
         self.truck_manager = TruckManager(self.app_data)
         self.report_manager = ReportManager(self.app_data)
 
+        self.load_state()
+
 
     def create_route(self, *stops, time_delta=0):
         return self.route_manager.generate_route(time_delta, *stops)
@@ -66,3 +68,17 @@ class LogisticsFacade:
         for p in packages:
             result += '\n' + self.assign_package_to_route(p.id)
         return result
+
+
+    def save_state(self):
+        for p in self.app_data.packages:
+            with open('db/packages.txt', 'a') as txt_file:
+                txt_file.write(f'{p.start_location} {p.end_location} {p.weight} {p.contact_info.first_name} {p.contact_info.last_name} {p.contact_info.email} {p.is_assigned} {p.connected_route}' + '\n')
+
+
+    def load_state(self):
+        with open('db/packages.txt') as txt_file:
+            for line in txt_file.readlines():
+                if line:
+                    start_location, end_location, weight, *customer_info, is_assigned, connected_route = line.split()
+                    self.package_manager.log_package(start_location, end_location, weight, *customer_info, is_assigned=is_assigned, connected_route=connected_route)

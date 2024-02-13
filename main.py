@@ -8,7 +8,11 @@ print(menu.menu_str)
 user_input = input('Type [0] to view the menu or choose a command: \n')
 
 
-while user_input != 'exit':
+while True:
+
+    if user_input == 'exit':
+        logistics_facade.save_state()
+        break
 
     try:
         execution = menu.execute(user_input)

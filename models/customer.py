@@ -1,6 +1,7 @@
 class Customer:
 
-    def __init__(self, first_name: str, last_name: str, email: str):
+    def __init__(self, first_name: str, last_name : str, email: str):
+
         if (len(first_name) < 2 or len(first_name) > 15) or not first_name.isalpha():
             raise ValueError(f'!!! ERROR FIRST NAME: "{first_name}"!!!\n'
                              f'   -First name can contain ONLY letters and length has to be 2-15 symbols!')
