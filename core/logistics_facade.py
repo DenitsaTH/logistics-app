@@ -24,7 +24,7 @@ class LogisticsFacade:
 
 
     def create_route(self, *stops, time_delta=0):
-        return self.route_manager.generate_route(time_delta, *stops)
+        return self.route_manager.generate_route_from_input(time_delta, *stops)
 
 
     def create_package(self, start_point, end_point, weight, *customer_info):
@@ -82,4 +82,4 @@ class LogisticsFacade:
         
 
     def load_state(self):
-        load_state(self.package_manager, self.truck_manager)
+        load_state(self.package_manager, self.truck_manager, self.route_manager, self.app_data)

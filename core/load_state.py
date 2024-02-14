@@ -1,14 +1,15 @@
 from datetime import datetime
 from managers.package_manager import PackageManager
 from managers.truck_manager import TruckManager
+from managers.route_manager import RouteManager
+from core.app_data import AppData
 
 
-def load_state(package_manager: PackageManager, truck_manager: TruckManager):
+def load_state(package_manager: PackageManager, truck_manager: TruckManager, route_manager: RouteManager, app_data: AppData):
     with open('db/packages.txt', 'r') as txt_file:
         for line in txt_file.readlines():
-            if line:
-                start_location, end_location, weight, *customer_info, is_assigned, connected_route = line.split()
-                package_manager.log_package(start_location, end_location, weight, *customer_info, is_assigned=is_assigned, connected_route=connected_route)
+            start_location, end_location, weight, *customer_info, is_assigned, connected_route = line.split()
+            package_manager.log_package(start_location, end_location, weight, *customer_info, is_assigned=is_assigned, connected_route=connected_route)
 
 
     with open('db/trucks.txt', 'r') as txt_file:
@@ -38,3 +39,15 @@ def load_state(package_manager: PackageManager, truck_manager: TruckManager):
                     current_idx += 1
             
             truck_manager.create_single_truck(brand, capacity, km_range, time_slots)
+
+
+    with open('db/routes.txt', 'r') as txt_file:
+        for line in txt_file.readlines():
+            distances, departure_d, departure_h, stops, truck_id, delivery_weight_per_stop = line.split()
+            distances = [int(x) for x in distances.split(',')]
+            departure_time = f'{departure_d} {departure_h}'
+            departure_time = datetime.strptime(departure_time, "%Y-%m-%d %H:%M:%S")
+            stops = stops.split(',')
+            truck_id = int(truck_id)
+            delivery_weight_per_stop = [float(x) for x in delivery_weight_per_stop.split(',')]
+            route_manager.generate_route_from_file(distances, departure_time, stops, truck_id, delivery_weight_per_stop)

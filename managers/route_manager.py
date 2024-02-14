@@ -57,16 +57,38 @@ class RouteManager:
         self.app_data = app_data
 
 
-    def generate_route(self, time_delta, *stops):
+    def generate_route_from_input(self, time_delta, *stops):
         distances = []
 
         for i in range(len(stops) - 1):
             distances.append(RouteManager.DISTANCES[stops[i]][stops[i + 1]])
 
-        route = Route(RouteManager.id, distances, time_delta, *stops)
+        departure_time = None
+        truck = None
+        capacity_per_stop = [0] * len(stops)
+        stops = [s for s in stops]
+
+        route = Route(RouteManager.id, distances, time_delta, departure_time, truck, capacity_per_stop, stops)
         self.app_data.add_route(route)
         RouteManager.increment_id()
         return f'Below route with ID [{route.id}] successfully added:\n{str(route)}'
+    
+
+    def generate_route_from_file(self, distances, departure_time, stops, truck_id, delivery_weight_per_stop):
+        distances = []
+
+        for i in range(len(stops) - 1):
+            distances.append(RouteManager.DISTANCES[stops[i]][stops[i + 1]])
+
+        time_delta = None
+        if truck_id != -1:
+            truck = self.get_truck_by_id(truck_id)
+        else:
+            truck = None
+
+        route = Route(RouteManager.id, distances, time_delta, departure_time, truck, delivery_weight_per_stop, stops)
+        self.app_data.add_route(route)
+        RouteManager.increment_id()
 
 
     def get_route_by_id(self, route_id):
@@ -74,6 +96,12 @@ class RouteManager:
         if route:
             return self.app_data.get_route_by_id(route_id)
         return
+    
+
+    def get_truck_by_id(self, truck_id):
+        for t in self.app_data.trucks:
+            if t.id == truck_id:
+                return t
 
 
     def assign_truck(self, id):

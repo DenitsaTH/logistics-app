@@ -55,7 +55,6 @@ class AppData:
 
         if route:
             if route.get_capacity(package_start_location, package_end_location, package_kg):
-                route.add_package(package)
                 package.connected_route = route.id
                 arrival_time = route.get_arrival_time_for_stop(package.end_location)
                 package.is_assigned = True
