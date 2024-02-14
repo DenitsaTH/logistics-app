@@ -1,12 +1,12 @@
 from core.logistics_facade import LogisticsFacade
 from core.menu import Menu
+from core.save_state import save_state
 
 
 logistics_facade = LogisticsFacade()
 menu = Menu(logistics_facade)
 print(menu.menu_str)
 user_input = input('Type [0] to view the menu or choose a command: \n')
-
 
 while True:
 
