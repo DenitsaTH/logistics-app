@@ -47,6 +47,9 @@ class AppData:
     def assign_package_to_route(self, package_id: int):
         package = self.get_package_by_id(package_id)
 
+        if not package:
+            return 'No package with such ID!'
+
         package_start_location = package.start_location
         package_end_location = package.end_location
         package_kg = package.weight
@@ -82,6 +85,7 @@ class AppData:
         for package in self.packages:
             if package.id == package_id:
                 return package
+        return
 
 
     def find_suitable_route(self, start_location, end_location):

@@ -20,4 +20,4 @@ def save_state(app_data: AppData):
                 truck_id = -1
             else:
                 truck_id = r.truck.id
-            txt_file.write(f'{','.join([str(x) for x in r.distances])} {datetime.strftime(r.departure_time, "%Y-%m-%d %H:%M:%S")} {','.join(r.stops)} {str(truck_id)} {','.join([str(x) for x in r.delivery_weight_per_stop])}')
+            txt_file.write(f'{','.join([str(x) for x in r.distances])} {datetime.strftime(r.departure_time, "%Y-%m-%d %H:%M:%S")} {','.join(r.stops)} {str(truck_id)} {','.join([str(x) for x in r.delivery_weight_per_stop])}\n')
