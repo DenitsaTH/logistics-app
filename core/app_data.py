@@ -39,6 +39,7 @@ class AppData:
     def find_suitable_truck(self, route_id, distance: int, start_time, end_time):
         for truck in self._trucks:
             if truck.km_range >= distance and not truck.is_time_slot_taken(route_id, start_time, end_time):
+                truck.update_truck_time_slot(route_id, start_time, end_time)
                 return truck
         raise ValueError("No available truck with this km range or capacity!")
 

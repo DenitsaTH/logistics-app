@@ -4,7 +4,7 @@ from models.truck import Truck
 
 
 def add_days_to_now(d):
-    return datetime.combine(datetime.today() + timedelta(d), time(hour=6))
+    return datetime.combine(datetime.today() + timedelta(d + 1), time(hour=6))
 
 
 class Route:
