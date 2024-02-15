@@ -51,10 +51,6 @@ class LogisticsFacade:
         return self.report_manager.get_package_report(package_id)
 
 
-    def get_route_by_stops(self, *locations):
-        return self.app_data.get_route_by_stops(*locations)
-
-
     def bulk_assign(self, location: str):
         packages, end_locations = self.app_data.check_backlog_for_location(location)
         if not packages:
@@ -62,7 +58,7 @@ class LogisticsFacade:
           
         locations = [location] + end_locations 
         self.create_route(*locations)
-        route = self.get_route_by_stops(*locations)
+        route = self.app_data.routes[-1]
 
         while True:
             try:

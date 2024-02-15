@@ -69,15 +69,7 @@ class AppData:
             if route.id == route_id:
                 return route
         return
-            
 
-    def get_route_by_stops(self, *locations):
-        for route in self.routes:
-            for l in locations:
-                if l not in route.stops:
-                    return
-        return route
-    
 
     def get_package_by_id(self, package_id: int):
         for package in self.packages:

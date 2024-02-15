@@ -1,5 +1,5 @@
 from core.logistics_facade import LogisticsFacade
-from core.helpers import ensure_valid_params_count, check_if_valid_stops, parse_to_integer
+from core.helpers import ensure_valid_params_count, check_if_valid_stops, parse_to_integer, check_if_valid_warehouse
 
 
 class Menu:
@@ -112,7 +112,7 @@ class Menu:
             warehouse_name = input('Warehouse name: \n').upper()
             self.back_to_main_menu(warehouse_name)
 
-            if not check_if_valid_stops(warehouse_name):
+            if not check_if_valid_warehouse(warehouse_name):
                 warehouse_name = input('Invalid warehouse name! Please choose from the following: SYD, MEL, ADL, ASP, BRI, DAR, PER\n').upper().split()
                 self.back_to_main_menu(warehouse_name)
             if not ensure_valid_params_count(max_expected=3, min_expected_count=3, actual_params=len(warehouse_name)):
