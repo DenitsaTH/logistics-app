@@ -4,27 +4,29 @@ from models.truck import Truck
 
 
 def add_days_to_now(d):
-    return datetime.combine(datetime.today() + timedelta(d), time(hour=6))
+    return datetime.combine(datetime.today() + timedelta(d + 1), time(hour=6))
 
 
 class Route:
-    DEFAULT_DEPARTURE_DATETIME = datetime.combine(datetime.today() + timedelta(0), time(hour=6))
+    DEFAULT_DEPARTURE_DATETIME = datetime.combine(datetime.today() + timedelta(1), time(hour=6))
     DEFAULT_SPEED = 87
 
-    def __init__(self, id: int, distances: list, time_delta, *stops) -> None:
+    def __init__(self, id: int, distances: list, time_delta, departure_time, truck, capacity_per_stop, stops) -> None:
 
         self.id = id
-        self.distances = distances
+        self.distances = distances 
 
-        if time_delta == 0:
-            self.departure_time = Route.DEFAULT_DEPARTURE_DATETIME
+        if departure_time:
+            self.departure_time = departure_time
         else:
-            self.departure_time = add_days_to_now(time_delta)
+            if time_delta == 0: 
+                self.departure_time = Route.DEFAULT_DEPARTURE_DATETIME 
+            else:
+                self.departure_time = add_days_to_now(time_delta)
 
-        self.stops = stops
-        self.truck = None
-        self.packages = []
-        self.delivery_weight_per_stop = [0] * len(stops)
+        self.stops = stops 
+        self.truck = truck
+        self.delivery_weight_per_stop = capacity_per_stop
 
 
     @property
@@ -36,10 +38,6 @@ class Route:
     def arrival_time(self):
         time_to_travel_in_mins = int((self.total_distance / Route.DEFAULT_SPEED) * 60)
         return self.departure_time + timedelta(minutes=time_to_travel_in_mins)
-
-
-    def add_package(self, package: Package):
-        self.packages.append(package)
 
 
     def find_arrival_times(self):
@@ -100,7 +98,7 @@ class Route:
 
 
     def remove_stop(self):
-        self.stops = list(self.stops)
+        # self.stops = list(self.stops)
         self.stops.pop()
         self.distances.pop()
 

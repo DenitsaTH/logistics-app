@@ -1,3 +1,8 @@
+import os
+
+valid_stops = ['syd', 'mel', 'adl', 'asp', 'bri', 'dar', 'per']
+
+
 def ensure_valid_params_count(min_expected_count=0, actual_params=0, max_expected=0):
     if min_expected_count == max_expected and min_expected_count != actual_params:
         return False
@@ -8,11 +13,17 @@ def ensure_valid_params_count(min_expected_count=0, actual_params=0, max_expecte
     return False
 
 
-def check_if_valid_stop(stops):
+def check_if_valid_stops(stops):
     for stop in stops:
-        if stop.lower() not in ['syd', 'mel', 'adl', 'asp', 'bri', 'dar', 'per']:
+        if stop.lower() not in valid_stops:
             return False
-    return True    
+    return True
+
+
+def check_if_valid_warehouse(stop):
+    if stop.lower() not in valid_stops:
+            return False
+    return True
     
 
 def parse_to_integer(s):
@@ -21,3 +32,6 @@ def parse_to_integer(s):
     except ValueError:
         return
     
+
+def file_is_empty(path):
+    return  True if os.stat(path).st_size==0 else False

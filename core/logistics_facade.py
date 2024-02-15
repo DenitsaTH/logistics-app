@@ -3,6 +3,9 @@ from managers.package_manager import PackageManager
 from managers.route_manager import RouteManager
 from managers.truck_manager import TruckManager
 from managers.report_manager import ReportManager
+from core.helpers import file_is_empty
+from core.save_state import save_state
+from core.load_state import load_state
 
 
 class LogisticsFacade:
@@ -10,12 +13,18 @@ class LogisticsFacade:
         self.app_data = AppData()
         self.package_manager = PackageManager(self.app_data)
         self.route_manager = RouteManager(self.app_data)
-        self.truck_manager = TruckManager(self.app_data)
+
+        if file_is_empty('db/trucks.txt'):
+            self.truck_manager = TruckManager(self.app_data, True)
+        else:
+            self.truck_manager = TruckManager(self.app_data, False)
+            self.load_state()
+
         self.report_manager = ReportManager(self.app_data)
 
 
     def create_route(self, *stops, time_delta=0):
-        return self.route_manager.generate_route(time_delta, *stops)
+        return self.route_manager.generate_route_from_input(time_delta, *stops)
 
 
     def create_package(self, start_point, end_point, weight, *customer_info):
@@ -66,3 +75,11 @@ class LogisticsFacade:
         for p in packages:
             result += '\n' + self.assign_package_to_route(p.id)
         return result
+
+
+    def save_state(self):
+        save_state(self.app_data)
+        
+
+    def load_state(self):
+        load_state(self.package_manager, self.truck_manager, self.route_manager, self.app_data)

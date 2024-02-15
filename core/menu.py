@@ -1,5 +1,5 @@
 from core.logistics_facade import LogisticsFacade
-from core.validation_helpers import ensure_valid_params_count, check_if_valid_stop, parse_to_integer
+from core.helpers import ensure_valid_params_count, check_if_valid_stops, parse_to_integer
 
 
 class Menu:
@@ -39,7 +39,7 @@ class Menu:
             if not ensure_valid_params_count(min_expected_count=2, actual_params=len(stops)):
                 stops = input('At least 2 stops required!\n').upper().split()
                 self.back_to_main_menu(stops)
-            if not check_if_valid_stop(stops):
+            if not check_if_valid_stops(stops):
                 stops = input('Invalid stop(s)! Please choose from the following: SYD, MEL, ADL, ASP, BRI, DAR, PER\n').upper().split()
                 self.back_to_main_menu(stops)
 
@@ -112,7 +112,7 @@ class Menu:
             warehouse_name = input('Warehouse name: \n').upper()
             self.back_to_main_menu(warehouse_name)
 
-            if not check_if_valid_stop(warehouse_name):
+            if not check_if_valid_stops(warehouse_name):
                 warehouse_name = input('Invalid warehouse name! Please choose from the following: SYD, MEL, ADL, ASP, BRI, DAR, PER\n').upper().split()
                 self.back_to_main_menu(warehouse_name)
             if not ensure_valid_params_count(max_expected=3, min_expected_count=3, actual_params=len(warehouse_name)):
@@ -142,8 +142,14 @@ class Menu:
         if cmd == '8':
             input_line = input('Type <all> to view information for all routes or <in progress> to view information only for routes in progress\n')
             if input_line == 'all':
-                return self.logistic_facade.view_route_information('all')
-            return self.logistic_facade.view_route_information('in progress')
+                result = self.logistic_facade.view_route_information('all')
+                if not result:
+                    return 'No routes'
+                return result
+            result = self.logistic_facade.view_route_information('in progress')
+            if not result:
+                return 'No routes in progress'
+            return result
 
 
         return 'Invalid command!'

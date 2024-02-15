@@ -1,7 +1,7 @@
 from models.customer import Customer
 
 class Package:
-    def __init__(self, id, start_location, end_location, weight: float, contact_info: Customer):
+    def __init__(self, id, start_location, end_location, weight: float, contact_info: Customer, is_assigned, connected_route):
         self._id = id
 
         if len(start_location) != 3:
@@ -12,15 +12,15 @@ class Package:
             raise ValueError('End location must be precisely 3 letters!')
         self._end_location = end_location
         
-        if weight > 42000:
+        if float(weight) > 42000:
             raise ValueError('Weight еxceeds maximum truck capacity!')
-        if weight <= 0:
+        if float(weight) <= 0:
             raise ValueError('Weight should be a positive number!')
-        self._weight = weight
+        self._weight = float(weight)
         
         self.contact_info = contact_info
-        self.is_assigned = False
-        self.connected_route = None
+        self.is_assigned = is_assigned
+        self.connected_route = connected_route
 
     @property
     def id(self):

@@ -44,6 +44,8 @@ class ReportManager:
         route_id = 0
         package = self.app_data.get_package_by_id(package_id)
         
+        if not package:
+            return f'No package with such ID!'
         if not package.is_assigned:
             return f'Package with ID [{package_id}] is in pending mode at {package.start_location} warehouse'
         
