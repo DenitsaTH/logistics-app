@@ -23,11 +23,9 @@ class Customer:
     def first_name(self):
         return self._first_name
 
-
     @property
     def last_name(self):
         return self._last_name
-
 
     @property
     def email(self):

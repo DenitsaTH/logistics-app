@@ -2,7 +2,6 @@ import os
 
 valid_stops = ['syd', 'mel', 'adl', 'asp', 'bri', 'dar', 'per']
 
-
 def ensure_valid_params_count(min_expected_count=0, actual_params=0, max_expected=0):
     if min_expected_count == max_expected and min_expected_count != actual_params:
         return False

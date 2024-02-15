@@ -13,11 +13,9 @@ class AppData:
     def packages(self):
         return tuple(self._packages)
     
-
     @property
     def routes(self):
         return tuple(self._routes)
-    
 
     @property
     def trucks(self):

@@ -98,7 +98,6 @@ class Route:
 
 
     def remove_stop(self):
-        # self.stops = list(self.stops)
         self.stops.pop()
         self.distances.pop()
 

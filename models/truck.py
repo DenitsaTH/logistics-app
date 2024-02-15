@@ -10,17 +10,14 @@ class Truck:
     @property
     def id(self):
         return self._id
-    
 
     @property
     def brand(self):
         return self._brand
-    
 
     @property
     def capacity(self):
         return self._capacity
-    
 
     @property
     def km_range(self):
