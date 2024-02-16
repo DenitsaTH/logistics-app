@@ -30,6 +30,7 @@ TO EXIT THE PROGRAM, TYPE [Exit]
 \*_\*_\*_\* MENU \*_\*_\*_\*
 
 1. Creating routes:
+
     To create a route, type **[1]**. Then, you'll be prompted to type **at least** 2 stops. You can choose from a list of predefined stops. Input the stops with the following codes (upper or lower):
 
         SYD for Sydney
@@ -44,11 +45,13 @@ TO EXIT THE PROGRAM, TYPE [Exit]
     The route is created and displayed on the console with departure time for first stop, arrival time for the rest of the stops, as well as delivery weight for each stop.
 
 2. Assigning trucks to routes:
+
     To assign a truck to a route, type **[2]**. Then, you'll be prompted to provide the ID of the route you would like to assign a truck to.
     The system searches for an available truck for the designated time slot and assigns it to the route, if found.
     A message will be displayed whether a truck was found.
 
 3. Creating packages:
+
     To create a package, type **[3]**. Then, you'll be asked to provide the following information (on a single line, separated by spaces):
 
         1. start location - the location where the package is being sent from. It has to be a correct stop (refer to 1).
