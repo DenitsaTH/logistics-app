@@ -3,7 +3,7 @@
 Logistics app is a console application that handles the planning of a logistics business based in Australia.
 It lets the user log packages, create delivery routes and operate with a total of 40 trucks.
 
-Running the program displays the following menu:
+Running the program from main.py displays the following menu:
 
 \*_\*_\*_\* MENU \*_\*_\*_\*
 
@@ -79,7 +79,7 @@ TO EXIT THE PROGRAM, TYPE [Exit]
 
 7. To view information for all _pending_ packages, type **[7]**. The system will display the information.
 
-8. To view information for routes, type **[8]**. Then, you'll be prompted to type _all_ to display all routes, or _in progress_ to display only the routes currently in progress.
+8. To view information for routes, type **[8]**. Then, you'll be prompted to type **all** to display all routes, or **in progress** to display only the routes currently in progress.
 
 You can go back to the main menu at any time by typing **back**.
 When you are in the main menu, you can type **[0]** to display the menu again.
