@@ -124,6 +124,7 @@ class Route:
 
 
     def __str__(self) -> str:
+        route_id = f'ID: [{self.id}] '
         result = [f'{x} ({self.custom_strftime("%b {S} %H:%Mh", y)} delivery weight: {str(z)}kg)' for x, y, z in
                   zip(self.stops, self.find_arrival_times(), self.delivery_weight_per_stop)]
-        return ' → '.join(result)
+        return route_id + ' → '.join(result)
