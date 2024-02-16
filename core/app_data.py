@@ -97,4 +97,6 @@ class AppData:
         
         
     def get_all_pending_packages_end_locations(self, packages: list[Package]):
-        return [p.end_location for p in packages]
+        result = []
+        [result.append(p.end_location) for p in packages if p.end_location not in result]
+        return result
