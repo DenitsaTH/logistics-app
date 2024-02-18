@@ -1,8 +1,8 @@
 from models.truck import Truck
 from core.app_data import AppData
 
-class TruckManager:
 
+class TruckManager:
     SCANIA_IDS = range(1001, 1011)
     MAN_IDS = range(1011, 1026)
     ACTROS_IDS = range(1026, 1041)
@@ -15,26 +15,33 @@ class TruckManager:
         'Actros': {'capacity': 26000, 'max_range': 13000}
     }
 
-
     def __init__(self, app_data: AppData, should_open_garage: bool):
+        if not isinstance(app_data, AppData):
+            raise ValueError('This is not valid AppData!')
+
         self.app_data = app_data
+
+        if not isinstance(should_open_garage, bool):
+            should_open_garage = False
+
         self.should_open_garage = should_open_garage
         if should_open_garage:
             self._open_garage()
         self.current_id = TruckManager.STARTING_ID
 
-
     def _open_garage(self):
         for id in range(TruckManager.STARTING_ID, TruckManager.ENDING_ID):
             if id in TruckManager.SCANIA_IDS:
-                truck = Truck(id, 'Scania', TruckManager.garage['Scania']['capacity'], TruckManager.garage['Scania']['max_range'])
+                truck = Truck(id, 'Scania', TruckManager.garage['Scania']['capacity'],
+                              TruckManager.garage['Scania']['max_range'])
             elif id in TruckManager.MAN_IDS:
-                truck = Truck(id, 'Man', TruckManager.garage['Man']['capacity'], TruckManager.garage['Man']['max_range'])
+                truck = Truck(id, 'Man', TruckManager.garage['Man']['capacity'],
+                              TruckManager.garage['Man']['max_range'])
             else:
-                truck = Truck(id, 'Actros', TruckManager.garage['Actros']['capacity'], TruckManager.garage['Actros']['max_range'])
+                truck = Truck(id, 'Actros', TruckManager.garage['Actros']['capacity'],
+                              TruckManager.garage['Actros']['max_range'])
 
             self.app_data.add_truck(truck)
-
 
     def create_single_truck(self, brand, capacity, km_range, time_slots=None):
         truck = Truck(self.current_id, brand, capacity, km_range, taken_time_slots=time_slots)

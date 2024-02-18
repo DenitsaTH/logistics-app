@@ -54,11 +54,17 @@ class RouteManager:
         cls.id += 1
 
     def __init__(self, app_data: AppData) -> None:
+        if not isinstance(app_data, AppData):
+            raise ValueError('This is not valid application data!')
         self.app_data = app_data
-
 
     def generate_route_from_input(self, time_delta, *stops):
         distances = []
+
+        # check if some stops are not in RouteManager.Distances
+        for stop in stops:
+            if stop not in RouteManager.DISTANCES.keys():
+                raise ValueError('This stop is not valid!')
 
         for i in range(len(stops) - 1):
             distances.append(RouteManager.DISTANCES[stops[i]][stops[i + 1]])
@@ -72,7 +78,6 @@ class RouteManager:
         self.app_data.add_route(route)
         RouteManager.increment_id()
         return f'Below route with ID [{route.id}] successfully added:\n{str(route)}'
-    
 
     def generate_route_from_file(self, distances, departure_time, stops, truck_id, delivery_weight_per_stop):
         distances = []
@@ -90,19 +95,16 @@ class RouteManager:
         self.app_data.add_route(route)
         RouteManager.increment_id()
 
-
     def get_route_by_id(self, route_id):
         route = self.app_data.get_route_by_id(route_id)
         if route:
             return self.app_data.get_route_by_id(route_id)
         return
-    
 
     def get_truck_by_id(self, truck_id):
         for t in self.app_data.trucks:
             if t.id == truck_id:
                 return t
-
 
     def assign_truck(self, id):
         route = self.get_route_by_id(id)

@@ -11,10 +11,11 @@ class PackageManager:
     def increment_id(cls):
         cls.id += 1
 
-
     def __init__(self, app_data: AppData) -> None:
-        self.app_data = app_data
+        if not isinstance(app_data, AppData):
+            raise ValueError('Invalid appdata!')
 
+        self.app_data = app_data
 
     def log_package(self, start_point, end_point, weight, *customer_info, is_assigned=False, connected_route=None):
         ensure_valid_params_count(min_expected_count=3, max_expected=3, actual_params=len(customer_info))
@@ -22,10 +23,10 @@ class PackageManager:
         customer_info = Customer(first_name, last_name, email)
         is_assigned = False if not is_assigned or is_assigned == 'False' else True
         connected_route = None if not connected_route or connected_route == 'None' else int(connected_route)
-        package = Package(PackageManager.id, start_point, end_point, weight, customer_info, is_assigned, connected_route)
+        package = Package(PackageManager.id, start_point, end_point, weight, customer_info, is_assigned,
+                          connected_route)
         self.app_data.add_package(package)
 
         PackageManager.increment_id()
 
         return f"\nPackage successfully logged!\n{str(package)}"
-    
