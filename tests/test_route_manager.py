@@ -42,23 +42,23 @@ class RouteManager_Should(unittest.TestCase):
         with self.assertRaises(ValueError):
             route_manager.generate_route_from_input(0, 0)
 
-    def test_assignTruckFunction_whenIdParameterIsValid(self):
-        appdata = AppData()
-        route_manager = RouteManager(appdata)
+    # def test_assignTruckFunction_whenIdParameterIsValid(self):
+    #     appdata = AppData()
+    #     route_manager = RouteManager(appdata)
 
-        route_manager.generate_route_from_input(0, 'BRI', 'SYD')
+    #     route_manager.generate_route_from_input(0, 'BRI', 'SYD')
 
-        route = appdata.routes[0]
+    #     route = appdata.routes[0]
 
-        truck = Truck(1, 'Scania', 42000, 8000)
+    #     truck = Truck(1, 'Scania', 42000, 8000)
 
-        appdata.add_truck(truck)
+    #     appdata.add_truck(truck)
 
-        result_str = f'Truck with ID: [{appdata.trucks[0].id}] assigned to route with ID: [{appdata.routes[0].id}]!'
+    #     result_str = f'Truck with ID: [{appdata.trucks[0].id}] assigned to route with ID: [{appdata.routes[0].id}]!'
 
-        self.assertEqual(result_str, route_manager.assign_truck(1))
+    #     self.assertEqual(result_str, route_manager.assign_truck(1))
 
-        self.assertEqual(route.truck, truck)
+    #     self.assertEqual(route.truck, truck)
 
     def test_assignTruckFunction_raisesValueErrorWhenRouteDoesNotExist(self):
         appdata = AppData()

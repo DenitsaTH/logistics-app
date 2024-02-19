@@ -154,7 +154,7 @@ class ReportManager_Should(unittest.TestCase):
         appdata = AppData()
         report_manager = ReportManager(appdata)
 
-        def_depart_time = datetime.combine(datetime.today() + timedelta(-0.5), time(hour=6))
+        def_depart_time = datetime.combine(datetime.today() + timedelta(-1), time(hour=6))
 
         truck = Truck(1, 'Scania', 42000, 8000)
 
@@ -211,7 +211,7 @@ class ReportManager_Should(unittest.TestCase):
 
         truck = Truck(1, 'Scania', 42000, 8000)
 
-        route = Route(1, [909, 877], 0, def_depart_time, truck, [], ['BRI', 'SYD', 'MEL'])
+        route = Route(1, [909, 877], 0, def_depart_time, truck, [], ['SYD', 'BRI', 'MEL'])
 
         customer = Customer('test', 'testov', 'test@gmail.com')
 
@@ -221,10 +221,11 @@ class ReportManager_Should(unittest.TestCase):
         appdata.add_package(package)
         appdata.add_truck(truck)
 
-        route_arrival_time = appdata.routes[0].get_arrival_time_for_stop(package.end_location)
-
+        route_arrival_time = route.get_arrival_time_for_stop(package.end_location)
         route_next_stop, route_time = route.get_next_stop(package.start_location)
 
+        appdata.assign_package_to_route(package.id)
+        
         expected_str = f'Package en route. Next stop: {route_next_stop} at {route_time}. Final stop: {package.end_location} at {route_arrival_time}'
 
         result = report_manager.get_package_report(1)
