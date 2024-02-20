@@ -11,6 +11,7 @@ truck_1 = Truck(1, 'Scania', 42000, 8000)
 route_1 = Route(1, [909, 877], 0, datetime.now(), truck_1, [], ['BRI', 'SYD', 'MEL'])
 package_1 = Package(1, 'BRI', 'SYD', 50, customer_1, None, None)
 
+#TODO - add more unit tests
 
 class AppData_Should(unittest.TestCase):
     def test_properties_returnTuple(self):
