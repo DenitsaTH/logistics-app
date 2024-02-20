@@ -23,7 +23,7 @@ class LogisticsFacade_Should(unittest.TestCase):
     def test_createRoute_returnsExpectedValue(self):
         actual_result = self.test_facade.create_route('SYD', 'BRI')
         route = self.test_facade.app_data.routes[-1]
-        expected_result = f'Below route with ID [{route.id}] successfully added:\nID: [{route.id}] SYD (Feb 20th 06:00h delivery weight: 0kg) → BRI (Feb 20th 16:26h delivery weight: 0kg)'
+        expected_result = f'Below route with ID [{route.id}] successfully added:\nID: [{route.id}] SYD ({route.custom_strftime("%b {S} %H:%Mh", route.departure_time)} delivery weight: 0kg) → BRI ({route.custom_strftime("%b {S} %H:%Mh", route.arrival_time)} delivery weight: 0kg)'
         self.assertEqual(expected_result, actual_result)
 
     def test_createPackage_returnsExpectedValue(self):
@@ -83,5 +83,5 @@ class LogisticsFacade_Should(unittest.TestCase):
         arrival_time = route.arrival_time
 
         actual_result = self.test_facade.assign_package_to_route(package.id)
-        expected_result = f'Package #{package.id} bound for {package.end_location}. Planned arrival time: {arrival_time.strftime("%b %dth %H:%Mh")}'
+        expected_result = f'Package #{package.id} bound for {package.end_location}. Planned arrival time: {route.custom_strftime("%b {S} %H:%Mh", route.arrival_time)}'
         self.assertEqual(expected_result, actual_result)

@@ -65,7 +65,7 @@ class ReportManager_Should(unittest.TestCase):
         self.assertEqual(expected_str, result)
 
     def test_getRouteReport_whenStatusIsEnRouteAndRuleIsInProgress(self):
-        def_depart_time = datetime.combine(datetime.today() + timedelta(-0.5), time(hour=6))
+        def_depart_time = datetime.combine(datetime.today() + timedelta(0), time(hour=6))
 
         truck = Truck(1, 'Scania', 42000, 8000)
 
