@@ -61,8 +61,10 @@ class Route:
 
 
     def get_capacity(self, start_location: str, end_location: str, package_kg):
-        #TODO - fix route capacity per stop
-        route_capacity = [self.truck.capacity] * len(self.stops)
+        if sum(self.delivery_weight_per_stop) == 0:
+            route_capacity = [self.truck.capacity] * len(self.stops)
+        else:
+            route_capacity = [self.truck.capacity - c for c in self.delivery_weight_per_stop]
         start_idx, end_idx = 0, 0
         enough_capacity = True
 
@@ -80,7 +82,7 @@ class Route:
         if enough_capacity:
             route_capacity = [r - package_kg for r in route_capacity if r in route_capacity[start_idx:end_idx]]
             self.delivery_weight_per_stop = [
-                package_kg if idx in range(start_idx, end_idx) else self.delivery_weight_per_stop[idx]
+                package_kg + self.delivery_weight_per_stop[idx] if idx in range(start_idx, end_idx) else self.delivery_weight_per_stop[idx]
                 for idx in range(len(self.delivery_weight_per_stop))
             ]
             return route_capacity
