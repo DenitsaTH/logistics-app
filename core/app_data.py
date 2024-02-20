@@ -50,6 +50,9 @@ class AppData:
 
         if not package:
             return 'No package with such ID!'
+        
+        if package.is_assigned:
+            return "Package already had an assigned route!"
 
         package_start_location = package.start_location
         package_end_location = package.end_location

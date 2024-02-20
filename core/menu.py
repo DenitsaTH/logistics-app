@@ -95,7 +95,12 @@ class Menu:
                 input_line = input('One of the required fields is missing or too many fields!\n').split()
                 if self.back_to_main_menu(input_line):
                     return 'Back to main menu!'
-
+            stops = (input_line[0], input_line[1])
+            if not check_if_valid_stops(stops):
+                input_line = input('One or more of the stops is invalid! Please choose from the following: SYD, MEL, ADL, ASP, BRI, DAR, PER\n').split()
+            if self.back_to_main_menu(input_line):
+                    return 'Back to main menu!'
+            
             start_location = input_line[0].upper()
             end_location = input_line[1].upper()
             weight = input_line[2]
