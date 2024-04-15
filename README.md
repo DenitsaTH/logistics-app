@@ -33,15 +33,21 @@ TO EXIT THE PROGRAM, TYPE [Exit]
 
     To create a route, type **[1]**. Then, you'll be prompted to type **at least** 2 stops. You can choose from a list of predefined stops. Input the stops with the following codes (upper or lower):
 
-        SYD for Sydney
-        MEL for Melbourn
-        ADL for Adelaide
-        ASP for Alice Springs
-        BRI for Brisbane
-        DAR for Darwin
-        PER for Perth
+    **SYD** for Sydney
 
-    Default departure time is tomorrow, 6 am. Type **[0]** for keeping the default, or a number of days ahead to create a route for another day.
+    **MEL** for Melbourn
+
+    **ADL** for Adelaide
+
+    **ASP** for Alice Springs
+
+    **BRI** for Brisbane
+
+    **DAR** for Darwin
+    
+    **PER** for Perth
+
+    Default departure time is next day, 6 am. Type **[0]** for keeping the default, or a number of days ahead to create a route for another day.
     The route is created and displayed on the console with departure time for first stop, arrival time for the rest of the stops, as well as delivery weight for each stop.
 
 2. Assigning trucks to routes:
@@ -54,17 +60,17 @@ TO EXIT THE PROGRAM, TYPE [Exit]
 
     To create a package, type **[3]**. Then, you'll be asked to provide the following information (on a single line, separated by spaces):
 
-        1. start location - the location where the package is being sent from. It has to be a correct stop (refer to 1).
+    1. start location - the location where the package is being sent from. It has to be a correct stop (refer to 1).
 
-        2. end location - the location that the package will be sent to. Again, it has to be a correct stop.
+    2. end location - the location that the package will be sent to. Again, it has to be a correct stop.
 
-        3. package weight - has to be a number (in kg).
+    3. package weight - has to be a number (in kg).
 
-        4. customer's first name - has to be at least 2 characters long (upper or lower)
+    4. customer's first name - has to be at least 2 characters long (upper or lower)
 
-        5. customer's last name - has to be at least 2 characters long (upper or lower)
+    5. customer's last name - has to be at least 2 characters long (upper or lower)
 
-        6. customer's email - has to contain both '@' and '.'
+    6. customer's email - has to contain both '@' and '.'
 
     The package is created and information about the package is displayed on the console.
 
